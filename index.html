@@ -218,6 +218,15 @@
 .lt{background:var(--surface2);color:var(--text-dim);border:0;padding:7px 12px;font:600 .8rem/1 'Segoe UI',system-ui,sans-serif;cursor:pointer;transition:all .15s}
 .lt.on{background:linear-gradient(135deg,var(--accent),var(--accent3));color:#fff}
 .lt:not(.on):hover{color:#fff}
+.author-wrap{padding:84px 52px;position:relative;overflow:hidden}
+.author-wrap::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:860px;height:440px;background:radial-gradient(ellipse,rgba(167,139,250,0.13),rgba(91,141,238,0.06) 45%,transparent 72%);pointer-events:none}
+.author-panel{position:relative;max-width:820px;margin:0 auto;text-align:center;background:radial-gradient(ellipse 70% 100% at 50% 0%,rgba(167,139,250,0.10),transparent 60%),var(--surface);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:52px 40px;box-shadow:0 24px 70px rgba(0,0,0,0.4)}
+.author-mono{width:88px;height:88px;border-radius:24px;margin:0 auto 22px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:1.9rem;color:#fff;letter-spacing:-1px;background:linear-gradient(135deg,var(--accent) 0%,var(--accent3) 100%);box-shadow:0 14px 38px rgba(91,141,238,0.4)}
+.author-name{font-size:clamp(2.5rem,7vw,4rem);font-weight:900;letter-spacing:-1.5px;line-height:1.04;margin-bottom:10px;background:linear-gradient(90deg,var(--accent) 0%,var(--accent2) 50%,var(--accent3) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.author-role{font-family:var(--font-mono);font-size:0.78rem;color:var(--accent2);text-transform:uppercase;letter-spacing:2.5px;margin-bottom:22px}
+.author-panel p{color:var(--text-mid);max-width:640px;margin:0 auto 16px;line-height:1.75}
+.author-panel p.big{font-size:1.12rem;color:var(--text)}
+.author-btn{font-size:1.08rem;padding:14px 28px;margin-top:8px}
 </style>
 </head>
 <body>
@@ -539,13 +548,14 @@
 </section>
 
 <div class="divider"></div>
-<section id="author" style="text-align:center">
-  <div class="section-label i18n" data-de="Der Mensch dahinter" data-en="The person behind it">Der Mensch dahinter</div>
-  <h2 class="section-title" style="font-size:clamp(2.2rem,6vw,3.6rem);margin-bottom:14px">Stephan Greiner</h2>
-  <p class="i18n" style="color:var(--text-mid);font-size:1.1rem;max-width:720px;margin:0 auto 18px;line-height:1.75" data-de="Dieses gesamte C++23-&Ouml;kosystem &mdash; die Architektur, der Code, die DSL, der KI-Dienst <strong>und diese Seiten</strong> &mdash; wurde von mir <strong>allein entworfen, gebaut und dokumentiert</strong>." data-en="This entire C++23 ecosystem &mdash; the architecture, the code, the DSL, the AI service <strong>and these pages</strong> &mdash; was <strong>designed, built and documented by me, single-handedly</strong>.">Dieses gesamte C++23-&Ouml;kosystem &mdash; die Architektur, der Code, die DSL, der KI-Dienst <strong>und diese Seiten</strong> &mdash; wurde von mir <strong>allein entworfen, gebaut und dokumentiert</strong>.</p>
-  <p class="i18n" style="color:var(--text-dim);font-size:0.95rem;margin-bottom:26px" data-de="Fragen, Zusammenarbeit oder einfach Interesse? Schreib mir:" data-en="Questions, collaboration or just curious? Get in touch:">Fragen, Zusammenarbeit oder einfach Interesse? Schreib mir:</p>
-  <div class="cta-btns">
-    <a class="btn btn-primary" href="mailto:stephan.greiner@gmx.de" style="font-size:1rem;padding:12px 22px">&#9993;&nbsp;&nbsp;stephan.greiner@gmx.de</a>
+<section id="author" class="author-wrap">
+  <div class="author-panel">
+    <div class="author-mono">SG</div>
+    <div class="author-role i18n" data-de="Der Mensch dahinter &middot; Alleiniger Architekt &amp; Entwickler" data-en="The person behind it &middot; Sole architect &amp; developer">Der Mensch dahinter &middot; Alleiniger Architekt &amp; Entwickler</div>
+    <div class="author-name">Stephan Greiner</div>
+    <p class="big i18n" data-de="Dieses gesamte C++23-&Ouml;kosystem &mdash; die Architektur, der Code, die DSL, der KI-Dienst <strong>und diese Seiten</strong> &mdash; wurde von mir <strong>allein entworfen, gebaut und dokumentiert</strong>." data-en="This entire C++23 ecosystem &mdash; the architecture, the code, the DSL, the AI service <strong>and these pages</strong> &mdash; was <strong>designed, built and documented by me, single-handedly</strong>.">Dieses gesamte C++23-&Ouml;kosystem &mdash; die Architektur, der Code, die DSL, der KI-Dienst <strong>und diese Seiten</strong> &mdash; wurde von mir <strong>allein entworfen, gebaut und dokumentiert</strong>.</p>
+    <p class="i18n" data-de="Fragen, Zusammenarbeit oder einfach Interesse? Schreib mir:" data-en="Questions, collaboration or just curious? Get in touch:">Fragen, Zusammenarbeit oder einfach Interesse? Schreib mir:</p>
+    <a class="btn btn-primary author-btn" href="mailto:stephan.greiner@gmx.de">&#9993;&nbsp;&nbsp;stephan.greiner@gmx.de</a>
   </div>
 </section>
 
