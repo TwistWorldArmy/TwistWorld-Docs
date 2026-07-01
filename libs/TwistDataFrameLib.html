@@ -238,14 +238,16 @@
 <div class="hero" style="padding:88px 52px 64px">
   <div class="hero-eyebrow i18n" data-de="DataFrame-Stack &middot; Daten &amp; DataFrames" data-en="DataFrame stack &middot; Data &amp; DataFrames">DataFrame-Stack &middot; Daten &amp; DataFrames</div>
   <h1 style="font-size:clamp(2.2rem,5vw,3.6rem)"><span class="world">TwistDataFrameLib</span></h1>
-  <p class="hero-sub i18n" data-de="Ein DataFrame-Stack f&uuml;r tabellarische Echtzeitdaten." data-en="A DataFrame stack for tabular real-time data.">Ein DataFrame-Stack f&uuml;r tabellarische Echtzeitdaten.</p>
-  <div class="hero-tags"><span class="tag i18n" data-de="DataFrame" data-en="DataFrame">DataFrame</span><span class="tag i18n" data-de="Cursor" data-en="Cursor">Cursor</span><span class="tag i18n" data-de="C-API" data-en="C-API">C-API</span></div>
+  <p class="hero-sub i18n" data-de="Ein typsicherer, thread-sicherer DataFrame-Stack f&uuml;r tabellarische Echtzeitdaten." data-en="A type-safe, thread-safe DataFrame stack for tabular real-time data.">Ein typsicherer, thread-sicherer DataFrame-Stack f&uuml;r tabellarische Echtzeitdaten.</p>
+  <div class="hero-tags"><span class="tag i18n" data-de="DataFrame" data-en="DataFrame">DataFrame</span><span class="tag i18n" data-de="Cursor" data-en="Cursor">Cursor</span><span class="tag i18n" data-de="Ring-Puffer" data-en="Ring buffer">Ring-Puffer</span><span class="tag i18n" data-de="dfId-Register" data-en="dfId registry">dfId-Register</span><span class="tag i18n" data-de="CSV" data-en="CSV">CSV</span><span class="tag i18n" data-de="Go-API" data-en="Go API">Go-API</span></div>
 </div>
 <div class="divider"></div>
 <section>
   <div class="section-label i18n" data-de="&Uuml;berblick" data-en="Overview">&Uuml;berblick</div>
   <h2 class="section-title i18n" data-de="Was ist TwistDataFrameLib?" data-en="What is TwistDataFrameLib?">Was ist TwistDataFrameLib?</h2>
-  <p class="section-sub i18n" data-de="Tabellarische Datenverarbeitung im Geist von pandas, aber in C++: Spalten, Cursor-Navigation und ein operator-basiertes Design f&uuml;r Transformationen &mdash; mit Anbindung an weitere Sprachen &uuml;ber eine C-API." data-en="Tabular data processing in the spirit of pandas, but in C++: columns, cursor navigation and an operator-based design for transformations &mdash; with bindings to other languages via a C API.">Tabellarische Datenverarbeitung im Geist von pandas, aber in C++: Spalten, Cursor-Navigation und ein operator-basiertes Design f&uuml;r Transformationen &mdash; mit Anbindung an weitere Sprachen &uuml;ber eine C-API.</p>
+  <p class="section-sub i18n" data-de="Tabellarische Datenverarbeitung in C++: <strong>typisierte Spalten</strong> in einem beschr&auml;nkten Ring-Puffer (rollierendes Fenster f&uuml;r Streams), navigierbare <strong>Cursor</strong> als Value-Types und ein RAII-basierter <strong>exklusiver Spalten-Schreibzugriff</strong> f&uuml;r sichere Nebenl&auml;ufigkeit." data-en="Tabular data processing in C++: <strong>typed columns</strong> in a bounded ring buffer (a rolling window for streams), navigable <strong>cursors</strong> as value types, and RAII-based <strong>exclusive per-column write access</strong> for safe concurrency.">Tabellarische Datenverarbeitung in C++: <strong>typisierte Spalten</strong> in einem beschr&auml;nkten Ring-Puffer (rollierendes Fenster f&uuml;r Streams), navigierbare <strong>Cursor</strong> als Value-Types und ein RAII-basierter <strong>exklusiver Spalten-Schreibzugriff</strong> f&uuml;r sichere Nebenl&auml;ufigkeit.</p>
+  <p class="section-sub i18n" data-de="Alle Frames liegen in einem prozessweiten <strong>Register</strong> und werden nur &uuml;ber eine String-<code>dfId</code> angesprochen &mdash; kein Pointer &uuml;berquert eine <code>.so</code>-Grenze. Dazu CSV (auch datei-gest&uuml;tzt), asynchrones Schreiben, ein Trigger-Hook und eine <strong>Go-C-API</strong>." data-en="All frames live in a process-wide <strong>registry</strong>, addressed only via a string <code>dfId</code> &mdash; no pointer crosses a <code>.so</code> boundary. Plus CSV (also file-backed), asynchronous writing, a trigger hook and a <strong>Go C-API</strong>.">Alle Frames liegen in einem prozessweiten <strong>Register</strong> und werden nur &uuml;ber eine String-<code>dfId</code> angesprochen &mdash; kein Pointer &uuml;berquert eine <code>.so</code>-Grenze. Dazu CSV (auch datei-gest&uuml;tzt), asynchrones Schreiben, ein Trigger-Hook und eine <strong>Go-C-API</strong>.</p>
+  <p class="section-sub i18n" data-de="Bewusste Abgrenzung: ein <strong>Echtzeit-Speicher</strong>, keine Analytics-Engine &mdash; Join, GroupBy und Aggregate liegen in der <strong>TwistDataFrameAlgoLib</strong>." data-en="Deliberate scope: a <strong>real-time store</strong>, not an analytics engine &mdash; join, groupBy and aggregates live in <strong>TwistDataFrameAlgoLib</strong>.">Bewusste Abgrenzung: ein <strong>Echtzeit-Speicher</strong>, keine Analytics-Engine &mdash; Join, GroupBy und Aggregate liegen in der <strong>TwistDataFrameAlgoLib</strong>.</p>
 </section>
 <div class="divider"></div>
 <section>
@@ -253,16 +255,20 @@
   <h2 class="section-title i18n" data-de="Was diese Bibliothek leistet" data-en="What this library does">Was diese Bibliothek leistet</h2>
   <div class="eng-grid">
     <div class="eng-card">
-      <h3><span class="ec-icon">&#x1F5C2;</span> <span class="i18n" data-de="Tabellen & Cursor" data-en="Tables & cursors">Tabellen & Cursor</span></h3>
-      <p class="i18n" data-de="Spaltenorientierte Daten mit gezielter Navigation." data-en="Column-oriented data with targeted navigation.">Spaltenorientierte Daten mit gezielter Navigation.</p>
+      <h3><span class="ec-icon">&#x1F5C2;</span> <span class="i18n" data-de="Typisierte Spalten & Cursor" data-en="Typed columns & cursors">Typisierte Spalten & Cursor</span></h3>
+      <p class="i18n" data-de="Spaltenorientiert, mit Typ-Enforcement und navigierbaren Value-Type-Cursorn." data-en="Column-oriented, with type enforcement and navigable value-type cursors.">Spaltenorientiert, mit Typ-Enforcement und navigierbaren Value-Type-Cursorn.</p>
     </div>
     <div class="eng-card">
-      <h3><span class="ec-icon">&#x2699;</span> <span class="i18n" data-de="Operator-basiert" data-en="Operator-based">Operator-basiert</span></h3>
-      <p class="i18n" data-de="Transformationen als komponierbare Operatoren." data-en="Transformations as composable operators.">Transformationen als komponierbare Operatoren.</p>
+      <h3><span class="ec-icon">&#x1F512;</span> <span class="i18n" data-de="Exklusiver Spalten-Writer" data-en="Exclusive column writer">Exklusiver Spalten-Writer</span></h3>
+      <p class="i18n" data-de="RAII-basierter, thread-sicherer Schreibzugriff pro Spalte." data-en="RAII-based, thread-safe write access per column.">RAII-basierter, thread-sicherer Schreibzugriff pro Spalte.</p>
     </div>
     <div class="eng-card">
-      <h3><span class="ec-icon">&#x1F517;</span> <span class="i18n" data-de="C-API-Br&uuml;cke" data-en="C-API bridge">C-API-Br&uuml;cke</span></h3>
-      <p class="i18n" data-de="Nutzbar auch aus anderen Sprachen." data-en="Usable from other languages too.">Nutzbar auch aus anderen Sprachen.</p>
+      <h3><span class="ec-icon">&#x1F5C3;</span> <span class="i18n" data-de="Zentrales dfId-Register" data-en="Central dfId registry">Zentrales dfId-Register</span></h3>
+      <p class="i18n" data-de="Frames nur &uuml;ber String-<code>dfId</code> &mdash; Br&uuml;cke zwischen Plugins, kein Pointer &uuml;ber <code>.so</code>." data-en="Frames only via string <code>dfId</code> &mdash; a bridge between plugins, no pointer across <code>.so</code>.">Frames nur &uuml;ber String-<code>dfId</code> &mdash; Br&uuml;cke zwischen Plugins, kein Pointer &uuml;ber <code>.so</code>.</p>
+    </div>
+    <div class="eng-card">
+      <h3><span class="ec-icon">&#x1F517;</span> <span class="i18n" data-de="CSV / async I/O + Go-API" data-en="CSV / async I/O + Go API">CSV / async I/O + Go-API</span></h3>
+      <p class="i18n" data-de="CSV-Export/-Import (auch datei-gest&uuml;tzt), asynchrones Schreiben, nutzbar aus Go." data-en="CSV export/import (also file-backed), async writing, usable from Go.">CSV-Export/-Import (auch datei-gest&uuml;tzt), asynchrones Schreiben, nutzbar aus Go.</p>
     </div>
   </div>
 </section>
