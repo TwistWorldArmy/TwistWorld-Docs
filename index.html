@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>TwistWorld &ndash; C++23-&Ouml;kosystem</title>
+<meta name="description" content="Modular C++23 ecosystem: a type-safe DSL engine, a DataFrame stack and the TwistMindService AI backend. Linux/Unix."/>
+<style>
+    :root {
+      --bg:          #0b0d14;
+      --surface:     #13151f;
+      --surface2:    #1a1d2b;
+      --surface3:    #20243a;
+      --border:      #252840;
+      --border2:     #2e3358;
+      --accent:      #5b8dee;
+      --accent2:     #7ec8e3;
+      --accent3:     #a78bfa;
+      --green:       #4caf7d;
+      --orange:      #e8a24a;
+      --red:         #e05c5c;
+      --teal:        #2dd4bf;
+      --text:        #cdd3ee;
+      --text-dim:    #6a7090;
+      --text-mid:    #9099c0;
+      --radius:      10px;
+      --radius-lg:   16px;
+      --font-mono:   'JetBrains Mono', 'Fira Code', monospace;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; line-height: 1.65; }
+    a { color: inherit; }
+
+    /* ── TOPBAR ── */
+    header {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(11,13,20,0.88); backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 52px; display: flex; align-items: center; justify-content: space-between; height: 56px;
+    }
+    .topbar-logo { display: flex; align-items: center; gap: 10px; }
+    .logo-mark {
+      width: 32px; height: 32px; border-radius: 8px;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent3) 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 900; font-size: 0.8rem; color: #fff; letter-spacing: -1px;
+    }
+    .topbar-logo span { font-weight: 700; font-size: 1rem; color: #fff; }
+    .topbar-nav { display: flex; gap: 28px; list-style: none; }
+    .topbar-nav a { color: var(--text-dim); text-decoration: none; font-size: 0.85rem; transition: color .2s; }
+    .topbar-nav a:hover { color: var(--accent); }
+    .topbar-right { display: flex; align-items: center; gap: 16px; }
+    @media(max-width:900px){ .topbar-nav { display: none; } header { padding: 0 22px; } }
+
+    /* ── BUTTONS ── */
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 0.85rem; font-weight: 600; text-decoration: none;
+      padding: 9px 16px; border-radius: 8px; transition: all .18s; white-space: nowrap;
+    }
+    .btn svg { width: 16px; height: 16px; }
+    .btn-primary { background: linear-gradient(135deg, var(--accent) 0%, var(--accent3) 100%); color: #fff; border: 1px solid transparent; }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(91,141,238,0.35); }
+    .btn-ghost { background: var(--surface2); color: var(--text); border: 1px solid var(--border2); }
+    .btn-ghost:hover { border-color: var(--accent); color: #fff; }
+    .btn-sm { padding: 7px 13px; font-size: 0.8rem; }
+
+    /* ── HERO ── */
+    .hero { position: relative; overflow: hidden; padding: 104px 52px 84px; text-align: center; }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background-image: linear-gradient(rgba(91,141,238,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(91,141,238,0.04) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 100%);
+    }
+    .hero::after {
+      content: ''; position: absolute; top: -80px; left: 50%; transform: translateX(-50%);
+      width: 900px; height: 460px;
+      background: radial-gradient(ellipse, rgba(91,141,238,0.10) 0%, rgba(167,139,250,0.05) 40%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-eyebrow { font-family: var(--font-mono); font-size: 0.72rem; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 2.5px; margin-bottom: 22px; position: relative; }
+    .hero h1 { font-size: clamp(2.8rem, 6vw, 4.8rem); font-weight: 900; letter-spacing: -2px; line-height: 1.04; position: relative; margin-bottom: 22px; }
+    .hero h1 .twist { color: #fff; }
+    .hero h1 .world { background: linear-gradient(90deg, var(--accent) 0%, var(--accent2) 50%, var(--accent3) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hero-sub { font-size: 1.1rem; color: var(--text-mid); max-width: 660px; margin: 0 auto 14px; position: relative; }
+    .hero-sub strong { color: var(--text); font-weight: 600; }
+    .hero-cta { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin: 34px 0 30px; position: relative; }
+    .hero-tags { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; position: relative; max-width: 760px; margin: 0 auto; }
+    .tag { font-family: var(--font-mono); font-size: 0.7rem; padding: 4px 11px; border-radius: 20px; border: 1px solid var(--border2); color: var(--text-mid); background: var(--surface2); }
+    .tag.hi  { border-color: rgba(91,141,238,0.4);  color: var(--accent);  background: rgba(91,141,238,0.07); }
+    .tag.gr  { border-color: rgba(76,175,125,0.4);  color: var(--green);   background: rgba(76,175,125,0.07); }
+    .tag.or  { border-color: rgba(232,162,74,0.4);  color: var(--orange);  background: rgba(232,162,74,0.07); }
+    .tag.pu  { border-color: rgba(167,139,250,0.4); color: var(--accent3); background: rgba(167,139,250,0.07); }
+
+    /* ── LAYOUT ── */
+    .divider { height: 1px; background: linear-gradient(90deg, transparent, var(--border2), transparent); margin: 0 52px; }
+    section { padding: 72px 52px; max-width: 1240px; margin: 0 auto; }
+    .section-label { font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--accent); margin-bottom: 10px; }
+    .section-title { font-size: 1.95rem; font-weight: 800; color: #fff; margin-bottom: 8px; letter-spacing: -0.5px; }
+    .section-sub { color: var(--text-dim); font-size: 0.95rem; margin-bottom: 44px; max-width: 720px; line-height: 1.7; }
+    .section-sub code, section p code { font-family: var(--font-mono); font-size: 0.82em; color: var(--accent2); background: rgba(126,200,227,0.07); border: 1px solid rgba(126,200,227,0.16); padding: 1px 5px; border-radius: 4px; }
+    @media(max-width:700px){ section { padding: 54px 24px; } .hero { padding: 80px 24px 60px; } .divider { margin: 0 24px; } }
+
+    /* ── STAT / HIGHLIGHT GRID ── */
+    .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; }
+    .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 26px; }
+    .stat-card .st-val { font-size: 1.75rem; font-weight: 900; color: #fff; letter-spacing: -1px; margin-bottom: 6px; }
+    .stat-card .st-val .accent { background: linear-gradient(90deg, var(--accent), var(--accent3)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .stat-card .st-label { font-size: 0.86rem; color: var(--text-dim); line-height: 1.55; }
+
+    /* ── TMS SPOTLIGHT ── */
+    .spotlight {
+      background:
+        radial-gradient(ellipse 60% 100% at 100% 0%, rgba(167,139,250,0.10), transparent 60%),
+        radial-gradient(ellipse 60% 100% at 0% 100%, rgba(91,141,238,0.08), transparent 60%),
+        var(--surface);
+      border: 1px solid var(--border2); border-radius: var(--radius-lg);
+      padding: 40px; display: grid; grid-template-columns: 1.3fr 1fr; gap: 40px; align-items: center;
+    }
+    @media(max-width:860px){ .spotlight { grid-template-columns: 1fr; padding: 30px; } }
+    .spotlight .sp-badge { display: inline-block; font-family: var(--font-mono); font-size: 0.68rem; color: var(--accent3); border: 1px solid rgba(167,139,250,0.35); background: rgba(167,139,250,0.07); padding: 3px 10px; border-radius: 20px; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 1.5px; }
+    .spotlight h3 { font-size: 1.6rem; font-weight: 800; color: #fff; margin-bottom: 14px; letter-spacing: -0.5px; }
+    .spotlight p { font-size: 0.92rem; color: var(--text-mid); line-height: 1.75; margin-bottom: 14px; }
+    .spotlight p code { font-family: var(--font-mono); font-size: 0.84em; color: var(--accent2); }
+    .sp-flow { background: rgba(0,0,0,0.25); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px; font-family: var(--font-mono); font-size: 0.78rem; line-height: 2.1; }
+    .sp-flow .node { color: #fff; font-weight: 600; }
+    .sp-flow .arrow { color: var(--text-dim); }
+    .sp-flow .lbl { color: var(--text-dim); font-size: 0.72rem; }
+    .sp-flow .c-blue { color: var(--accent); }
+    .sp-flow .c-purple { color: var(--accent3); }
+    .sp-flow .c-green { color: var(--green); }
+    .sp-flow .c-teal { color: var(--teal); }
+
+    /* ── LIB CARDS ── */
+    .lib-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 20px; }
+    .lib-card {
+      position: relative; background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 28px; text-decoration: none; display: block;
+      transition: border-color .2s, transform .2s, box-shadow .2s; overflow: hidden;
+    }
+    .lib-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--card-from, var(--accent)), var(--card-to, var(--accent2))); opacity: 0; transition: opacity .2s; }
+    .lib-card:hover { border-color: var(--border2); transform: translateY(-3px); box-shadow: 0 14px 44px rgba(0,0,0,0.45); }
+    .lib-card:hover::before { opacity: 1; }
+    .lib-card.blue   { --card-from:#5b8dee; --card-to:#7ec8e3; }
+    .lib-card.green  { --card-from:#4caf7d; --card-to:#7ec8e3; }
+    .lib-card.purple { --card-from:#a78bfa; --card-to:#5b8dee; }
+    .lib-card.orange { --card-from:#e8a24a; --card-to:#e05c5c; }
+    .lib-card.teal   { --card-from:#2dd4bf; --card-to:#5b8dee; }
+    .card-icon { width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; margin-bottom: 16px; border: 1px solid var(--border2); }
+    .card-icon.blue   { background: rgba(91,141,238,0.12); }
+    .card-icon.green  { background: rgba(76,175,125,0.12); }
+    .card-icon.purple { background: rgba(167,139,250,0.12); }
+    .card-icon.orange { background: rgba(232,162,74,0.12); }
+    .card-icon.teal   { background: rgba(45,212,191,0.12); }
+    .card-ns    { font-family: var(--font-mono); font-size: 0.67rem; color: var(--text-dim); margin-bottom: 6px; }
+    .card-title { font-size: 1.1rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .card-desc  { font-size: 0.84rem; color: var(--text-dim); line-height: 1.6; margin-bottom: 18px; }
+    .card-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 18px; }
+    .chip { font-family: var(--font-mono); font-size: 0.67rem; padding: 3px 8px; border-radius: 6px; background: var(--surface2); border: 1px solid var(--border); color: var(--text-mid); }
+    .card-link { display: inline-flex; align-items: center; gap: 6px; font-size: 0.82rem; font-weight: 600; color: var(--accent); transition: gap .15s; }
+    .lib-card:hover .card-link { gap: 10px; }
+    .card-link svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+    /* ── ENGINEERING HIGHLIGHTS ── */
+    .eng-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    @media(max-width:800px){ .eng-grid { grid-template-columns: 1fr; } }
+    .eng-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 28px; }
+    .eng-card h3 { font-size: 1.05rem; font-weight: 700; color: #fff; margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
+    .eng-card h3 .ec-icon { font-size: 1.15rem; }
+    .eng-card p { font-size: 0.88rem; color: var(--text-dim); line-height: 1.75; }
+    .eng-card p code { font-family: var(--font-mono); font-size: 0.84em; color: var(--accent2); }
+    .eng-card strong { color: var(--text-mid); font-weight: 600; }
+
+    /* ── MVP / TIERS ── */
+    .tier-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-bottom: 26px; }
+    @media(max-width:800px){ .tier-grid { grid-template-columns: 1fr; } }
+    .tier-card { position: relative; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 26px; }
+    .tier-card.hl { border-color: rgba(45,212,191,0.35); background: linear-gradient(180deg, rgba(45,212,191,0.05), transparent); }
+    .tier-num { font-family: var(--font-mono); font-size: 0.74rem; color: var(--text-dim); margin-bottom: 10px; }
+    .tier-card h3 { font-size: 1.1rem; font-weight: 700; color: #fff; margin-bottom: 6px; }
+    .tier-when { font-family: var(--font-mono); font-size: 0.7rem; color: var(--accent2); margin-bottom: 14px; }
+    .tier-card p { font-size: 0.86rem; color: var(--text-dim); line-height: 1.65; }
+    .mvp-chain-wrap { background: rgba(0,0,0,0.18); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 28px; }
+    .mvp-chain-label { font-size: 0.72rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 18px; font-family: var(--font-mono); }
+    .mvp-chain { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+    .mvp-chain .mc { font-family: var(--font-mono); font-size: 0.8rem; padding: 8px 13px; border-radius: 8px; background: var(--surface2); border: 1px solid var(--border2); color: var(--text-mid); }
+    .mvp-chain .mc.hl { background: linear-gradient(135deg, rgba(91,141,238,0.15), rgba(167,139,250,0.12)); border-color: rgba(91,141,238,0.5); color: #fff; font-weight: 600; }
+    .mvp-chain .mc-arr { color: var(--text-dim); font-size: 1rem; }
+    .mvp-status { font-size: 0.88rem; color: var(--text-dim); line-height: 1.7; margin-top: 22px; }
+    .mvp-status strong { color: var(--text-mid); }
+    .mvp-status a { color: var(--accent); text-decoration: none; }
+    .mvp-status a:hover { text-decoration: underline; }
+
+    /* ── CTA ── */
+    .cta-wrap { text-align: center; padding: 80px 52px; position: relative; overflow: hidden; }
+    .cta-wrap::after { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 700px; height: 320px; background: radial-gradient(ellipse, rgba(91,141,238,0.10), transparent 70%); pointer-events: none; }
+    .cta-wrap h2 { font-size: 2rem; font-weight: 800; color: #fff; margin-bottom: 12px; letter-spacing: -0.5px; position: relative; }
+    .cta-wrap p { color: var(--text-mid); font-size: 1rem; max-width: 560px; margin: 0 auto 30px; position: relative; }
+    .cta-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; position: relative; }
+
+    /* ── FOOTER ── */
+    footer { border-top: 1px solid var(--border); padding: 28px 52px; display: flex; align-items: center; justify-content: space-between; color: var(--text-dim); font-size: 0.8rem; flex-wrap: wrap; gap: 12px; }
+    footer .fl { display: flex; align-items: center; gap: 12px; }
+    footer .fl-logo { font-weight: 700; color: var(--text-mid); }
+    footer code { font-family: var(--font-mono); color: var(--text-dim); font-size: 0.73rem; }
+    footer .fr { color: var(--text-dim); font-size: 0.73rem; text-align: right; }
+    footer a { color: var(--text-dim); text-decoration: none; }
+    footer a:hover { color: var(--accent); }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+  </style>
+<style>
+.langtoggle{display:inline-flex;border:1px solid var(--border2);border-radius:8px;overflow:hidden}
+.lt{background:var(--surface2);color:var(--text-dim);border:0;padding:7px 12px;font:600 .8rem/1 'Segoe UI',system-ui,sans-serif;cursor:pointer;transition:all .15s}
+.lt.on{background:linear-gradient(135deg,var(--accent),var(--accent3));color:#fff}
+.lt:not(.on):hover{color:#fff}
+</style>
+</head>
+<body>
+<header>
+  <div class="topbar-logo"><div class="logo-mark">TW</div><span><a href="index.html" style="text-decoration:none;color:#fff">TwistWorld</a></span></div>
+  <ul class="topbar-nav"><li><a href="#ueberblick" class="i18n" data-de="&Uuml;berblick" data-en="Overview">&Uuml;berblick</a></li><li><a href="#mvp" class="i18n" data-de="Produkt / MVP" data-en="Product / MVP">Produkt / MVP</a></li><li><a href="#mind" class="i18n" data-de="TwistMindService" data-en="TwistMindService">TwistMindService</a></li><li><a href="#libs" class="i18n" data-de="Bibliotheken" data-en="Libraries">Bibliotheken</a></li><li><a href="#engineering" class="i18n" data-de="Engineering" data-en="Engineering">Engineering</a></li></ul>
+  <div class="topbar-right"><div class="langtoggle"><button class="lt" data-lang="de">DE</button><button class="lt" data-lang="en">EN</button></div></div>
+</header>
+
+<div class="hero">
+  <div class="hero-eyebrow i18n" data-de="Modulares C++23-&Ouml;kosystem &middot; Linux / Unix" data-en="Modular C++23 ecosystem &middot; Linux / Unix">Modulares C++23-&Ouml;kosystem &middot; Linux / Unix</div>
+  <h1><span class="twist">Twist</span><span class="world">World</span></h1>
+  <p class="hero-sub i18n" data-de="Ein in Eigenregie entwickeltes C++23-&Ouml;kosystem f&uuml;r <strong>hochperformante, typsichere und systemnahe Echtzeit-Anwendungen</strong> &mdash; von einer eigenen DSL-Engine &uuml;ber einen DataFrame-Stack bis zum KI-Backend-Dienst <strong>TwistMindService</strong>." data-en="An independently built C++23 ecosystem for <strong>high-performance, type-safe, low-level real-time applications</strong> &mdash; from a custom DSL engine and a DataFrame stack to the AI backend service <strong>TwistMindService</strong>.">Ein in Eigenregie entwickeltes C++23-&Ouml;kosystem f&uuml;r <strong>hochperformante, typsichere und systemnahe Echtzeit-Anwendungen</strong> &mdash; von einer eigenen DSL-Engine &uuml;ber einen DataFrame-Stack bis zum KI-Backend-Dienst <strong>TwistMindService</strong>.</p>
+  <div class="hero-cta">
+    <a class="btn btn-primary" href="#libs"><span class="i18n" data-de="Bibliotheken entdecken" data-en="Explore the libraries">Bibliotheken entdecken</span></a>
+    <a class="btn btn-ghost" href="#mind">TwistMindService &rarr;</a>
+  </div>
+  <div class="hero-tags">
+    <span class="tag hi">C++23</span><span class="tag">GCC 13+ / Clang 17+</span>
+    <span class="tag gr">Linux / Unix</span><span class="tag">CMake</span><span class="tag or">Conan</span>
+    <span class="tag">Type Erasure</span><span class="tag pu">DSL-Engine</span>
+    <span class="tag">MQTT</span><span class="tag">WebSocket</span><span class="tag pu">CUDA / LibTorch</span>
+    <span class="tag gr">Qdrant</span><span class="tag">spdlog &middot; boost &middot; etl</span>
+  </div>
+</div>
+
+<div class="divider"></div>
+<section id="ueberblick">
+  <div class="section-label i18n" data-de="Auf einen Blick" data-en="At a glance">Auf einen Blick</div>
+  <h2 class="section-title i18n" data-de="Ein durchg&auml;ngig selbst entworfenes System" data-en="A system designed entirely in-house">Ein durchg&auml;ngig selbst entworfenes System</h2>
+  <p class="section-sub i18n" data-de="TwistWorld ist kein einzelnes Programm, sondern ein gewachsenes &Ouml;kosystem eigenst&auml;ndiger, lose gekoppelter Module &mdash; vom Typsystem &uuml;ber die Build-Infrastruktur bis zur KI-Anbindung alles aus einer Hand." data-en="TwistWorld is not a single program but a grown ecosystem of self-contained, loosely coupled modules &mdash; from the type system and build infrastructure to AI integration, all from one hand.">TwistWorld ist kein einzelnes Programm, sondern ein gewachsenes &Ouml;kosystem eigenst&auml;ndiger, lose gekoppelter Module &mdash; vom Typsystem &uuml;ber die Build-Infrastruktur bis zur KI-Anbindung alles aus einer Hand.</p>
+  <div class="stat-grid"><div class="stat-card"><div class="st-val"><span class="accent">C++23</span></div><div class="st-label i18n" data-de="Durchg&auml;ngig moderner Standard &mdash; Concepts, <code>std::format</code>, <code>source_location</code>, deducing this." data-en="A consistently modern standard &mdash; concepts, <code>std::format</code>, <code>source_location</code>, deducing this.">Durchg&auml;ngig moderner Standard &mdash; Concepts, <code>std::format</code>, <code>source_location</code>, deducing this.</div></div><div class="stat-card"><div class="st-val"><span class="accent">.so</span>-sicher</div><div class="st-label i18n" data-de="Templates &uuml;ber Shared-Library-Grenzen gel&ouml;st per <strong>Type Erasure</strong> &mdash; ohne ABI-Br&uuml;che." data-en="Templates across shared-library boundaries solved via <strong>type erasure</strong> &mdash; without ABI breaks.">Templates &uuml;ber Shared-Library-Grenzen gel&ouml;st per <strong>Type Erasure</strong> &mdash; ohne ABI-Br&uuml;che.</div></div><div class="stat-card"><div class="st-val"><span class="accent">Eigene</span> DSL</div><div class="st-label i18n" data-de="Tokenize &rarr; Parse &rarr; Integrity-Check &rarr; Execute. Eine typsichere Skriptsprache, vollst&auml;ndig selbst gebaut." data-en="Tokenize &rarr; Parse &rarr; Integrity check &rarr; Execute. A type-safe scripting language, built entirely in-house.">Tokenize &rarr; Parse &rarr; Integrity-Check &rarr; Execute. Eine typsichere Skriptsprache, vollst&auml;ndig selbst gebaut.</div></div><div class="stat-card"><div class="st-val">KI-<span class="accent">Backend</span></div><div class="st-label i18n" data-de="TwistMindService verbindet MQTT-Clients mit lokalen LLMs, Vektor-Ged&auml;chtnis und Plugin-Bots." data-en="TwistMindService connects MQTT clients with local LLMs, vector memory and plugin bots.">TwistMindService verbindet MQTT-Clients mit lokalen LLMs, Vektor-Ged&auml;chtnis und Plugin-Bots.</div></div></div>
+</section>
+
+<div class="divider"></div>
+<section id="mvp">
+  <div class="section-label i18n" data-de="Produkt-Vision &middot; MVP" data-en="Product vision &middot; MVP">Produkt-Vision &middot; MVP</div>
+  <h2 class="section-title i18n" data-de="Maschinen-Integration ohne Treiber-Handarbeit" data-en="Machine integration without hand-written drivers">Maschinen-Integration ohne Treiber-Handarbeit</h2>
+  <p class="section-sub i18n" data-de="Wof&uuml;r dieses &Ouml;kosystem entsteht: eine Plattform, die <strong>Prozessstra&szlig;en</strong> verwaltet und steuert. Maschinen werden zu austauschbaren <strong>Nodes</strong>, allein durch ihre Schnittstellenbeschreibung (ICD) definiert &mdash; aus der ICD wird KI-gest&uuml;tzt automatisch ein getesteter, <strong>deterministischer Treiber</strong> generiert, statt ihn von Hand zu schreiben." data-en="What this ecosystem is being built for: a platform that manages and controls <strong>process lines</strong>. Machines become interchangeable <strong>nodes</strong>, defined solely by their interface description (ICD) &mdash; from which an AI automatically generates a tested, <strong>deterministic driver</strong>, instead of writing it by hand.">Wof&uuml;r dieses &Ouml;kosystem entsteht: eine Plattform, die <strong>Prozessstra&szlig;en</strong> verwaltet und steuert. Maschinen werden zu austauschbaren <strong>Nodes</strong>, allein durch ihre Schnittstellenbeschreibung (ICD) definiert &mdash; aus der ICD wird KI-gest&uuml;tzt automatisch ein getesteter, <strong>deterministischer Treiber</strong> generiert, statt ihn von Hand zu schreiben.</p>
+  <div class="tier-grid"><div class="tier-card"><div class="tier-num">TIER 01</div><h3 class="i18n" data-de="Design-Time" data-en="Design time">Design-Time</h3><div class="tier-when i18n" data-de="1&times; pro Maschinentyp &middot; starkes Modell" data-en="once per machine type &middot; strong model">1&times; pro Maschinentyp &middot; starkes Modell</div><p class="i18n" data-de="Liest die ICD und generiert daraus einen Treiber &mdash; die teure Intelligenz f&auml;llt nur einmal pro Maschinentyp an." data-en="Reads the ICD and generates a driver from it &mdash; the expensive intelligence is needed only once per machine type.">Liest die ICD und generiert daraus einen Treiber &mdash; die teure Intelligenz f&auml;llt nur einmal pro Maschinentyp an.</p></div><div class="tier-card hl"><div class="tier-num">TIER 02</div><h3 class="i18n" data-de="Runtime-Treiber" data-en="Runtime driver">Runtime-Treiber</h3><div class="tier-when i18n" data-de="dauernd, pro Node &middot; kein Modell" data-en="continuous, per node &middot; no model">dauernd, pro Node &middot; kein Modell</div><p class="i18n" data-de="Deterministisches DSL &uuml;bersetzt Node-I/O &harr; Maschine. Modellfrei &mdash; und damit industriell vertrauensw&uuml;rdig." data-en="Deterministic DSL translates node I/O &harr; machine. Model-free &mdash; and therefore industrially trustworthy.">Deterministisches DSL &uuml;bersetzt Node-I/O &harr; Maschine. Modellfrei &mdash; und damit industriell vertrauensw&uuml;rdig.</p></div><div class="tier-card"><div class="tier-num">TIER 03</div><h3 class="i18n" data-de="Runtime-Steuerung" data-en="Runtime control">Runtime-Steuerung</h3><div class="tier-when i18n" data-de="dauernd, pro Anlage &middot; lokales Modell" data-en="continuous, per plant &middot; local model">dauernd, pro Anlage &middot; lokales Modell</div><p class="i18n" data-de="Orchestriert die Anlage und nutzt die Treiber als Werkzeuge &mdash; lokal, ohne teure GPU-Infrastruktur." data-en="Orchestrates the plant and uses the drivers as tools &mdash; locally, without costly GPU infrastructure.">Orchestriert die Anlage und nutzt die Treiber als Werkzeuge &mdash; lokal, ohne teure GPU-Infrastruktur.</p></div></div>
+  <div class="mvp-chain-wrap">
+    <div class="mvp-chain-label i18n" data-de="Der MVP-Durchstich &mdash; eine durchg&auml;ngige Kette an einem realen Beispiel" data-en="The MVP through-line &mdash; one end-to-end chain on a real example">Der MVP-Durchstich &mdash; eine durchg&auml;ngige Kette an einem realen Beispiel</div>
+    <div class="mvp-chain"><span class="mc i18n" data-de="Maschine mit ICD" data-en="Machine with ICD">Maschine mit ICD</span><span class="mc-arr">&rarr;</span><span class="mc i18n" data-de="automatisch verstanden" data-en="understood automatically">automatisch verstanden</span><span class="mc-arr">&rarr;</span><span class="mc i18n" data-de="Treiber via DSL generiert" data-en="driver generated via DSL">Treiber via DSL generiert</span><span class="mc-arr">&rarr;</span><span class="mc i18n" data-de="getestet" data-en="tested">getestet</span><span class="mc-arr">&rarr;</span><span class="mc i18n" data-de="Node erkannt" data-en="node recognized">Node erkannt</span><span class="mc-arr">&rarr;</span><span class="mc hl i18n" data-de="System arbeitet mit der Maschine" data-en="system works with the machine">System arbeitet mit der Maschine</span></div>
+    <p class="mvp-status i18n" data-de="<strong>Status:</strong> Die Agenten- und Steuerungs-Engine (TwistMindService) ist bereits gebaut. Die DSL, in der die Treiber ausgedr&uuml;ckt werden, ist die aktuelle Entwicklungspriorit&auml;t &mdash; konzipiert und umgesetzt von einer einzelnen Person." data-en="<strong>Status:</strong> The agent and control engine (TwistMindService) is already built. The DSL in which the drivers are expressed is the current development priority &mdash; conceived and implemented by a single person."><strong>Status:</strong> Die Agenten- und Steuerungs-Engine (TwistMindService) ist bereits gebaut. Die DSL, in der die Treiber ausgedr&uuml;ckt werden, ist die aktuelle Entwicklungspriorit&auml;t &mdash; konzipiert und umgesetzt von einer einzelnen Person.</p>
+  </div>
+</section>
+
+<div class="divider"></div>
+<section id="mind">
+  <div class="section-label i18n" data-de="Flaggschiff-Anwendung" data-en="Flagship application">Flaggschiff-Anwendung</div>
+  <h2 class="section-title i18n" data-de="TwistMindService &mdash; der KI-Backend-Dienst" data-en="TwistMindService &mdash; the AI backend service">TwistMindService &mdash; der KI-Backend-Dienst</h2>
+  <p class="section-sub i18n" data-de="Wo das &Ouml;kosystem zusammenl&auml;uft: ein asynchroner Linux-Dienst, der beliebige Clients &uuml;ber MQTT mit lokalen Sprachmodellen, einem Vektor-Langzeitged&auml;chtnis und dynamisch geladenen Werkzeug-Bots verbindet." data-en="Where the ecosystem comes together: an asynchronous Linux service that connects arbitrary clients via MQTT with local language models, a vector long-term memory and dynamically loaded tool bots.">Wo das &Ouml;kosystem zusammenl&auml;uft: ein asynchroner Linux-Dienst, der beliebige Clients &uuml;ber MQTT mit lokalen Sprachmodellen, einem Vektor-Langzeitged&auml;chtnis und dynamisch geladenen Werkzeug-Bots verbindet.</p>
+  <div class="spotlight">
+    <div>
+      <span class="sp-badge">TwistMindService &middot; TMS</span>
+      <h3 class="i18n" data-de="Eigenst&auml;ndige KI-Instanzen mit Ged&auml;chtnis und Werkzeugen" data-en="Independent AI instances with memory and tools">Eigenst&auml;ndige KI-Instanzen mit Ged&auml;chtnis und Werkzeugen</h3>
+      <p class="i18n" data-de="Jede KI-Instanz ist unabh&auml;ngig &mdash; <strong>eigenes Modell, eigene Collection, eigene Plugins</strong>. Alle Operationen sind vollst&auml;ndig asynchron; keine blockierenden Wartezeiten." data-en="Each AI instance is independent &mdash; <strong>its own model, its own collection, its own plugins</strong>. All operations are fully asynchronous; no blocking waits.">Jede KI-Instanz ist unabh&auml;ngig &mdash; <strong>eigenes Modell, eigene Collection, eigene Plugins</strong>. Alle Operationen sind vollst&auml;ndig asynchron; keine blockierenden Wartezeiten.</p>
+      <p class="i18n" data-de="Langzeitged&auml;chtnis entsteht &uuml;ber Vektor-Embeddings, Kurzzeitged&auml;chtnis &uuml;ber Modell-Sessions. Werkzeug-Bots &mdash; etwa Datei- oder Web-Zugriff &mdash; werden als <code>.so</code>-Plugins zur Laufzeit geladen und vom Modell selbst angesteuert." data-en="Long-term memory forms via vector embeddings, short-term memory via model sessions. Tool bots &mdash; e.g. file or web access &mdash; are loaded as <code>.so</code> plugins at runtime and driven by the model itself.">Langzeitged&auml;chtnis entsteht &uuml;ber Vektor-Embeddings, Kurzzeitged&auml;chtnis &uuml;ber Modell-Sessions. Werkzeug-Bots &mdash; etwa Datei- oder Web-Zugriff &mdash; werden als <code>.so</code>-Plugins zur Laufzeit geladen und vom Modell selbst angesteuert.</p>
+    </div>
+    <div class="sp-flow">
+      <span class="lbl i18n" data-de="// Datenfluss" data-en="// Data flow">// Datenfluss</span><br>
+      <span class="c-blue node">MQTT-Client</span> <span class="arrow">&#9472;&#9472;&#9658;</span><br>
+      <span class="c-purple node">MindRouter</span><br>
+      <span class="arrow">&nbsp;&nbsp;&#9492;&#9472;&#9658;</span> <span class="c-purple node">MindController</span> <span class="lbl">&times;N</span><br>
+      <span class="arrow">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9500;&#9472;&#9658;</span> <span class="c-teal node">LLM</span> <span class="lbl">(local)</span><br>
+      <span class="arrow">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9500;&#9472;&#9658;</span> <span class="c-green node">Qdrant</span> <span class="lbl">(Vektor)</span><br>
+      <span class="arrow">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#9492;&#9472;&#9658;</span> <span class="c-orange node">Plugin-Bots</span> <span class="lbl">(.so)</span>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+<section id="engineering">
+  <div class="section-label i18n" data-de="Was technisch dahintersteckt" data-en="The engineering behind it">Was technisch dahintersteckt</div>
+  <h2 class="section-title i18n" data-de="Engineering-Highlights" data-en="Engineering highlights">Engineering-Highlights</h2>
+  <p class="section-sub i18n" data-de="Einige der Entwurfsentscheidungen, auf die es ankommt &mdash; bewusst als Beleg f&uuml;r anspruchsvolles Systems-Engineering." data-en="A few of the design decisions that matter &mdash; deliberately built as evidence of serious systems engineering.">Einige der Entwurfsentscheidungen, auf die es ankommt &mdash; bewusst als Beleg f&uuml;r anspruchsvolles Systems-Engineering.</p>
+  <div class="eng-grid"><div class="eng-card"><h3><span class="ec-icon">&#x1F9E9;</span> <span class="i18n" data-de="Type Erasure &uuml;ber .so-Grenzen" data-en="Type erasure across .so boundaries">Type Erasure &uuml;ber .so-Grenzen</span></h3><p class="i18n" data-de="C++-Templates lassen sich nicht ohne Weiteres &uuml;ber Shared-Library-Grenzen ausliefern. TwistWorld l&ouml;st das mit einem typausgel&ouml;schten Handle samt Small-Object-Optimierung &mdash; generische Operatoren funktionieren ABI-stabil &uuml;ber <code>.so</code>-Grenzen hinweg." data-en="C++ templates can't simply be shipped across shared-library boundaries. TwistWorld solves this with a type-erased handle plus small-object optimization &mdash; generic operators work ABI-stable across <code>.so</code> boundaries.">C++-Templates lassen sich nicht ohne Weiteres &uuml;ber Shared-Library-Grenzen ausliefern. TwistWorld l&ouml;st das mit einem typausgel&ouml;schten Handle samt Small-Object-Optimierung &mdash; generische Operatoren funktionieren ABI-stabil &uuml;ber <code>.so</code>-Grenzen hinweg.</p></div><div class="eng-card"><h3><span class="ec-icon">&#x1F501;</span> <span class="i18n" data-de="Vierphasige DSL-Pipeline" data-en="Four-phase DSL pipeline">Vierphasige DSL-Pipeline</span></h3><p class="i18n" data-de="Eine vollst&auml;ndige Skriptsprache von Grund auf: <strong>Tokenize &rarr; Parse &rarr; Integrity-Check &rarr; Execute</strong>. Der Integrity-Check baut das Typsystem auf und pr&uuml;ft Signaturen &mdash; statische Sicherheit vor der Ausf&uuml;hrung." data-en="A complete scripting language from scratch: <strong>Tokenize &rarr; Parse &rarr; Integrity check &rarr; Execute</strong>. The integrity check builds the type system and validates signatures &mdash; static safety before execution.">Eine vollst&auml;ndige Skriptsprache von Grund auf: <strong>Tokenize &rarr; Parse &rarr; Integrity-Check &rarr; Execute</strong>. Der Integrity-Check baut das Typsystem auf und pr&uuml;ft Signaturen &mdash; statische Sicherheit vor der Ausf&uuml;hrung.</p></div><div class="eng-card"><h3><span class="ec-icon">&#x26A1;</span> <span class="i18n" data-de="Heap-frei & echtzeitnah" data-en="Heap-free & real-time">Heap-frei & echtzeitnah</span></h3><p class="i18n" data-de="Small-Buffer-optimierte Laufzeitwerte, atomare Ringpuffer und ein leichter RW-Lock &mdash; bewusst auf <strong>vorhersagbare Latenz</strong> und minimale Heap-Allokation ausgelegt statt auf bequeme Standard-Container." data-en="Small-buffer-optimized runtime values, atomic ring buffers and a lightweight RW lock &mdash; deliberately built for <strong>predictable latency</strong> and minimal heap allocation instead of convenient standard containers.">Small-Buffer-optimierte Laufzeitwerte, atomare Ringpuffer und ein leichter RW-Lock &mdash; bewusst auf <strong>vorhersagbare Latenz</strong> und minimale Heap-Allokation ausgelegt statt auf bequeme Standard-Container.</p></div><div class="eng-card"><h3><span class="ec-icon">&#x1F9F0;</span> <span class="i18n" data-de="Eigenes Build- & Plugin-Framework" data-en="Custom build & plugin framework">Eigenes Build- & Plugin-Framework</span></h3><p class="i18n" data-de="Ein konventionsbasiertes CMake-Framework generiert Konsumenten-Interfaces automatisch und zieht transitive Abh&auml;ngigkeiten in einer Zeile auf. Bots und KI-Werkzeuge werden als <code>.so</code>-Plugins <strong>zur Laufzeit</strong> geladen." data-en="A convention-based CMake framework generates consumer interfaces automatically and pulls transitive dependencies in a single line. Bots and AI tools are loaded as <code>.so</code> plugins <strong>at runtime</strong>.">Ein konventionsbasiertes CMake-Framework generiert Konsumenten-Interfaces automatisch und zieht transitive Abh&auml;ngigkeiten in einer Zeile auf. Bots und KI-Werkzeuge werden als <code>.so</code>-Plugins <strong>zur Laufzeit</strong> geladen.</p></div></div>
+</section>
+
+<div class="divider"></div>
+<section id="libs">
+  <div class="section-label i18n" data-de="Bausteine" data-en="Building blocks">Bausteine</div>
+  <h2 class="section-title i18n" data-de="Die Bibliotheken im &Uuml;berblick" data-en="The libraries at a glance">Die Bibliotheken im &Uuml;berblick</h2>
+  <p class="section-sub i18n" data-de="Jede Bibliothek ist ein eigenst&auml;ndiges CMake-Projekt und wird als <code>.so</code> ausgeliefert. Klick f&uuml;hrt zur jeweiligen Vorstellung." data-en="Each library is a self-contained CMake project, shipped as a <code>.so</code>. Click through to its introduction.">Jede Bibliothek ist ein eigenst&auml;ndiges CMake-Projekt und wird als <code>.so</code> ausgeliefert. Klick f&uuml;hrt zur jeweiligen Vorstellung.</p>
+</section>
+<div class="divider"></div>
+<section id="cat0" style="padding-top:40px;padding-bottom:40px">
+  <div class="section-label i18n" data-de="Kern &amp; Basis" data-en="Core &amp; Foundation">Kern &amp; Basis</div>
+  <h2 class="section-title i18n" data-de="Kern &amp; Basis" data-en="Core &amp; Foundation">Kern &amp; Basis</h2>
+  <div class="lib-grid">
+    <a href="libs/TwistTypes.html" class="lib-card blue">
+      <div class="card-icon blue">&#x2BC0;</div>
+      <span class="card-ns i18n" data-de="namespace TWISTTYPES" data-en="namespace TWISTTYPES">namespace TWISTTYPES</span>
+      <div class="card-title">TwistTypes</div>
+      <div class="card-desc i18n" data-de="Das typsichere Fundament des gesamten &Ouml;kosystems." data-en="The type-safe foundation of the entire ecosystem.">Das typsichere Fundament des gesamten &Ouml;kosystems.</div>
+      <div class="card-chips"><span class="chip i18n" data-de="Laufzeitwert" data-en="Runtime value">Laufzeitwert</span><span class="chip i18n" data-de="SBO" data-en="SBO">SBO</span><span class="chip i18n" data-de="Ringpuffer" data-en="Ring buffer">Ringpuffer</span><span class="chip i18n" data-de="RW-Lock" data-en="RW lock">RW-Lock</span></div>
+      <span class="card-link"><span class="i18n" data-de="Vorstellung" data-en="Details">Vorstellung</span> <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+    </a>
+    <a href="libs/TwistSystemUtils.html" class="lib-card green">
+      <div class="card-icon green">&#x2699;</div>
+      <span class="card-ns i18n" data-de="namespace TWISTSYSUTILS" data-en="namespace TWISTSYSUTILS">namespace TWISTSYSUTILS</span>
+      <div class="card-title">TwistSystemUtils</div>
+      <div class="card-desc i18n" data-de="Systemnahe Grundfunktionen: Logging, Fehlerbehandlung, Linux-Utilities." data-en="Low-level essentials: logging, error handling, Linux utilities.">Systemnahe Grundfunktionen: Logging, Fehlerbehandlung, Linux-Utilities.</div>
+      <div class="card-chips"><span class="chip i18n" data-de="Logging" data-en="Logging">Logging</span><span class="chip i18n" data-de="Exceptions" data-en="Exceptions">Exceptions</span><span class="chip i18n" data-de="source_location" data-en="source_location">source_location</span><span class="chip i18n" data-de="Linux" data-en="Linux">Linux</span></div>
+      <span class="card-link"><span class="i18n" data-de="Vorstellung" data-en="Details">Vorstellung</span> <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+    </a>
+    <a href="libs/TwistInterfaceLib.html" class="lib-card teal">
+      <div class="card-icon teal">&#x25C7;</div>
+      <span class="card-ns i18n" data-de="Interfaces" data-en="Interfaces">Interfaces</span>
+      <div class="card-title">TwistInterfaceLib</div>
+      <div class="card-desc i18n" data-de="Die abstrakten Vertr&auml;ge, die das &Ouml;kosystem entkoppeln." data-en="The abstract contracts that decouple the ecosystem.">Die abstrakten Vertr&auml;ge, die das &Ouml;kosystem entkoppeln.</div>
+      <div class="card-chips"><span class="chip i18n" data-de="Interfaces" data-en="Interfaces">Interfaces</span><span class="chip i18n" data-de="Cursor" data-en="Cursor">Cursor</span><span class="chip i18n" data-de="DataFrame" data-en="DataFrame">DataFrame</span><span class="chip i18n" data-de="Entkopplung" data-en="Decoupling">Entkopplung</span></div>
+      <span class="card-link"><span class="i18n" data-de="Vorstellung" data-en="Details">Vorstellung</span> <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+    </a>
+    <a href="libs/TwistUtils.html" class="lib-card blue">
+      <div class="card-icon blue">&#x1F9F0;</div>
+      <span class="card-ns i18n" data-de="Utils" data-en="Utils">Utils</span>
+      <div class="card-title">TwistUtils</div>
+      <div class="card-desc i18n" data-de="Nebenl&auml;ufigkeit und dynamisches Laden von Modulen." data-en="Concurrency and dynamic module loading.">Nebenl&auml;ufigkeit und dynamisches Laden von Modulen.</div>
+      <div class="card-chips"><span class="chip i18n" data-de="Threading" data-en="Threading">Threading</span><span class="chip i18n" data-de="PlugInLoader" data-en="PlugInLoader">PlugInLoader</span><span class="chip i18n" data-de=".so" data-en=".so">.so</span></div>
+      <span class="card-link"><span class="i18n" data-de="Vorstellung" data-en="Details">Vorstellung</span> <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+    </a>
+    <a href="libs/TwistRingBufferLib.html" class="lib-card green">
+      <div class="card-icon green">&#x1F501;</div>
+      <span class="card-ns i18n" data-de="Ringpuffer" data-en="Ring buffer">Ringpuffer</span>
+      <div class="card-title">TwistRingBufferLib</div>
+      <div class="card-desc i18n" data-de="Ein optimierter Ringpuffer f&uuml;r Datenstr&ouml;me." data-en="An optimized ring buffer for data streams.">Ein optimierter Ringpuffer f&uuml;r Datenstr&ouml;me.</div>
+      <div class="card-chips"><span class="chip i18n" data-de="Ringpuffer" data-en="Ring buffer">Ringpuffer</span><span class="chip i18n" data-de="Streaming" data-en="Streaming">Streaming</span><span class="chip i18n" data-de="Echtzeit" data-en="Real-time">Echtzeit</span></div>
+      <span class="card-link"><span class="i18n" data-de="Vorstellung" data-en="Details">Vorstellung</span> <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+    </a>
+    <a href="libs/TwistUnitProfilerLib.html" class="lib-card orange">
+      <div class="card-icon orange">&#x1F52C;</div>
+      <span class="card-ns i18n" data-de="Debug-only" data-en="Debug-only">Debug-only</span>
+      <div class="card-title">TwistUnitProfilerLib</div>
+      <div class="card-desc i18n" data-de="Speicher-Allokations-Tracking &mdash; nur f&uuml;r Debug-Builds." data-en="Memory allocation tracking &mdash; for debug builds only.">Speicher-Allokations-Tracking &mdash; nur f&uuml;r Debug-Builds.</div>
+      <div class="card-chips"><span class="chip i18n" data-de="Profiling" data-en="Profiling">Profiling</span><span class="chip i18n" data-de="Debug" data-en="Debug">Debug</span><span class="chip i18n" data-de="Allokationen" data-en="Allocations">Allokationen</span></div>
+      <span class="card-link"><span class="i18n" data-de="Vorstellung" data-en="Details">Vorstellung</span> <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+    </a>
+  </div>
+</section>
+<div class="divider"></div>
+<section id="cat1" style="padding-top:40px;padding-bottom:40px">
+  <div class="section-label i18n" data-de="DSL-Engine" data-en="DSL Engine">DSL-Engine</div>
+  <h2 class="section-title i18n" data-de="DSL-Engine" data-en="DSL Engine">DSL-Engine</h2>
+  <div class="lib-grid">
+    <a href="libs/TwistDSLTypes.html" class="lib-card purple">
+      <div class="card-icon purple">&#x2B21;</div>
+      <span class="card-ns i18n" data-de="namespace TWISTDSLTYPES" data-en="namespace TWISTDSLTYPES">namespace TWISTDSLTYPES</span>
+      <div class="card-title">TwistDSLTypes</div>
+      <div class="card-desc i18n" data-de="Das typsichere R&uuml;ckgrat der DSL &mdash; &uuml;ber <code>.so</code>-Grenzen hinweg." data-en="The type-safe backbone of the DSL &mdash; across <code>.so</code> boundaries.">Das typsichere R&uuml;ckgrat der DSL &mdash; &uuml;ber <code>.so</code>-Grenzen hinweg.</div>
+      <div class="card-chips"><span class="chip i18n" data-de="Type Erasure" data-en="Type erasure">Type Erasure</span><span class="chip i18n" data-de=".so-sicher" data-en=".so-safe">.so-sicher</span><span class="chip i18n" data-de="Operatoren" data-en="Operators">Operatoren</span><span class="chip i18n" data-de="Typregister" data-en="Type registry">Typregister</span></div>
+      <span class="card-link"><span class="i18n" data-de="Vorstellung" data-en="Details">Vorstellung</span> <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+    </a>
+    <a href="libs/TwistDSLLib.html" class="lib-card purple">
+      <div class="card-icon purple">&#x03BB;</div>
+      <span class="card-ns i18n" data-de="DSL-Interpreter" data-en="DSL interpreter">DSL-Interpreter</span>
+      <div class="card-title">TwistDSLLib</div>
+      <div class="card-desc i18n" data-de="Der Interpreter der selbst entworfenen Skriptsprache." data-en="The interpreter of the self-designed scripting language.">Der Interpreter der selbst entworfenen Skriptsprache.</div>
+      <div class="card-chips"><span class="chip i18n" data-de="Tokenize&rarr;Execute" data-en="Tokenize&rarr;Execute">Tokenize&rarr;Execute</span><span class="chip i18n" data-de="Kontrollfluss" data-en="Control flow">Kontrollfluss</span><span class="chip i18n" data-de="typgepr&uuml;ft" data-en="type-checked">typgepr&uuml;ft</span></div>
+      <span class="card-link"><span class="i18n" data-de="Vorstellung" data-en="Details">Vorstellung</span> <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+    </a>
+    <a href="libs/TwistDSLFactoryParserContextLib.html" class="lib-card purple">
+      <div class="card-icon purple">&#x1F3ED;</div>
+      <span class="card-ns i18n" data-de="DSL-Factory-PlugIns" data-en="DSL factory plugins">DSL-Factory-PlugIns</span>
+      <div class="card-title">TwistDSLFactoryParserContextLib</div>
+      <div class="card-desc i18n" data-de="Pro Sprache ein zur Laufzeit ladbares Tokenizer- und Factory-Plugin." data-en="One runtime-loadable tokenizer and factory plugin per language.">Pro Sprache ein zur Laufzeit ladbares Tokenizer- und Factory-Plugin.</div>
+      <div class="card-chips"><span class="chip i18n" data-de="Factory-Plugins" data-en="Factory plugins">Factory-Plugins</span><span class="chip i18n" data-de="Parser" data-en="Parser">Parser</span><span class="chip i18n" data-de="erweiterbar" data-en="extensible">erweiterbar</span></div>
+      <span class="card-link"><span class="i18n" data-de="Vorstellung" data-en="Details">Vorstellung</span> <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+    </a>
+  </div>
+</section>
+<div class="divider"></div>
+<section id="cat2" style="padding-top:40px;padding-bottom:40px">
+  <div class="section-label i18n" data-de="Daten &amp; DataFrames" data-en="Data &amp; DataFrames">Daten &amp; DataFrames</div>
+  <h2 class="section-title i18n" data-de="Daten &amp; DataFrames" data-en="Data &amp; DataFrames">Daten &amp; DataFrames</h2>
+  <div class="lib-grid">
+    <a href="libs/TwistDataTreeContainer.html" class="lib-card teal">
+      <div class="card-icon teal">&#x1F333;</div>
+      <span class="card-ns i18n" data-de="Daten" data-en="Data">Daten</span>
+      <div class="card-title">TwistDataTreeContainer</div>
+      <div class="card-desc i18n" data-de="Thread-sichere Baum-Datenstrukturen mit JSON-Anbindung." data-en="Thread-safe tree data structures with JSON binding.">Thread-sichere Baum-Datenstrukturen mit JSON-Anbindung.</div>
+      <div class="card-chips"><span class="chip i18n" data-de="Baum" data-en="Tree">Baum</span><span class="chip i18n" data-de="thread-sicher" data-en="thread-safe">thread-sicher</span><span class="chip i18n" data-de="JSON" data-en="JSON">JSON</span></div>
+      <span class="card-link"><span class="i18n" data-de="Vorstellung" data-en="Details">Vorstellung</span> <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+    </a>
+    <a href="libs/TwistDataFrameLib.html" class="lib-card blue">
+      <div class="card-icon blue">&#x1F5C2;</div>
+      <span class="card-ns i18n" data-de="DataFrame-Stack" data-en="DataFrame stack">DataFrame-Stack</span>
+      <div class="card-title">TwistDataFrameLib</div>
+      <div class="card-desc i18n" data-de="Ein DataFrame-Stack f&uuml;r tabellarische Echtzeitdaten." data-en="A DataFrame stack for tabular real-time data.">Ein DataFrame-Stack f&uuml;r tabellarische Echtzeitdaten.</div>
+      <div class="card-chips"><span class="chip i18n" data-de="DataFrame" data-en="DataFrame">DataFrame</span><span class="chip i18n" data-de="Cursor" data-en="Cursor">Cursor</span><span class="chip i18n" data-de="C-API" data-en="C-API">C-API</span></div>
+      <span class="card-link"><span class="i18n" data-de="Vorstellung" data-en="Details">Vorstellung</span> <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+    </a>
+    <a href="libs/TwistDataFrameAlgoLib.html" class="lib-card blue">
+      <div class="card-icon blue">&#x2211;</div>
+      <span class="card-ns i18n" data-de="DataFrame-Algorithmen" data-en="DataFrame algorithms">DataFrame-Algorithmen</span>
+      <div class="card-title">TwistDataFrameAlgoLib</div>
+      <div class="card-desc i18n" data-de="Algorithmen und Bedingungen auf DataFrames." data-en="Algorithms and conditions on DataFrames.">Algorithmen und Bedingungen auf DataFrames.</div>
+      <div class="card-chips"><span class="chip i18n" data-de="Algorithmen" data-en="Algorithms">Algorithmen</span><span class="chip i18n" data-de="Filter" data-en="Filter">Filter</span><span class="chip i18n" data-de="Bedingungen" data-en="Conditions">Bedingungen</span></div>
+      <span class="card-link"><span class="i18n" data-de="Vorstellung" data-en="Details">Vorstellung</span> <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+    </a>
+    <a href="libs/TwistArchiveFrameTypes.html" class="lib-card teal">
+      <div class="card-icon teal">&#x1F4E6;</div>
+      <span class="card-ns i18n" data-de="Frame-Typen" data-en="Frame types">Frame-Typen</span>
+      <div class="card-title">TwistArchiveFrameTypes</div>
+      <div class="card-desc i18n" data-de="Die Kern-Typen des DataFrame- und Archiv-Stacks." data-en="The core types of the DataFrame and archive stack.">Die Kern-Typen des DataFrame- und Archiv-Stacks.</div>
+      <div class="card-chips"><span class="chip i18n" data-de="Frame-Typen" data-en="Frame types">Frame-Typen</span><span class="chip i18n" data-de="Cursor" data-en="Cursor">Cursor</span><span class="chip i18n" data-de="Archiv" data-en="Archive">Archiv</span></div>
+      <span class="card-link"><span class="i18n" data-de="Vorstellung" data-en="Details">Vorstellung</span> <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+    </a>
+    <a href="libs/TwistResultContextDataFrameLib.html" class="lib-card blue">
+      <div class="card-icon blue">&#x1F9EE;</div>
+      <span class="card-ns i18n" data-de="Ergebnis-Kontext" data-en="Result context">Ergebnis-Kontext</span>
+      <div class="card-title">TwistResultContextDataFrameLib</div>
+      <div class="card-desc i18n" data-de="Operator-Ergebnisse geb&uuml;ndelt in zentralen DataFrames." data-en="Operator results bundled into central DataFrames.">Operator-Ergebnisse geb&uuml;ndelt in zentralen DataFrames.</div>
+      <div class="card-chips"><span class="chip i18n" data-de="Ergebnis-Kontext" data-en="Result context">Ergebnis-Kontext</span><span class="chip i18n" data-de="DataFrame" data-en="DataFrame">DataFrame</span><span class="chip i18n" data-de="zentral" data-en="central">zentral</span></div>
+      <span class="card-link"><span class="i18n" data-de="Vorstellung" data-en="Details">Vorstellung</span> <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+    </a>
+    <a href="libs/ConfigAdminLib.html" class="lib-card orange">
+      <div class="card-icon orange">&#x1F6E0;</div>
+      <span class="card-ns i18n" data-de="Konfiguration" data-en="Configuration">Konfiguration</span>
+      <div class="card-title">ConfigAdminLib</div>
+      <div class="card-desc i18n" data-de="Zentrale Konfigurationsverwaltung." data-en="Central configuration management.">Zentrale Konfigurationsverwaltung.</div>
+      <div class="card-chips"><span class="chip i18n" data-de="Config" data-en="Config">Config</span><span class="chip i18n" data-de="zentral" data-en="central">zentral</span><span class="chip i18n" data-de="IDs" data-en="IDs">IDs</span></div>
+      <span class="card-link"><span class="i18n" data-de="Vorstellung" data-en="Details">Vorstellung</span> <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+    </a>
+  </div>
+</section>
+<div class="divider"></div>
+<section id="cat3" style="padding-top:40px;padding-bottom:40px">
+  <div class="section-label i18n" data-de="Kommunikation" data-en="Communication">Kommunikation</div>
+  <h2 class="section-title i18n" data-de="Kommunikation" data-en="Communication">Kommunikation</h2>
+  <div class="lib-grid">
+    <a href="libs/TwistComLib.html" class="lib-card green">
+      <div class="card-icon green">&#x1F50C;</div>
+      <span class="card-ns i18n" data-de="Kommunikation" data-en="Communication">Kommunikation</span>
+      <div class="card-title">TwistComLib</div>
+      <div class="card-desc i18n" data-de="Multi-Protokoll-Kommunikation: MQTT, WebSocket, ZeroMQ." data-en="Multi-protocol communication: MQTT, WebSocket, ZeroMQ.">Multi-Protokoll-Kommunikation: MQTT, WebSocket, ZeroMQ.</div>
+      <div class="card-chips"><span class="chip i18n" data-de="MQTT v5" data-en="MQTT v5">MQTT v5</span><span class="chip i18n" data-de="WebSocket" data-en="WebSocket">WebSocket</span><span class="chip i18n" data-de="ZeroMQ" data-en="ZeroMQ">ZeroMQ</span></div>
+      <span class="card-link"><span class="i18n" data-de="Vorstellung" data-en="Details">Vorstellung</span> <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+    </a>
+    <a href="libs/TwistInfoSystemLib.html" class="lib-card green">
+      <div class="card-icon green">&#x1F4E1;</div>
+      <span class="card-ns i18n" data-de="Pub/Sub" data-en="Pub/Sub">Pub/Sub</span>
+      <div class="card-title">TwistInfoSystemLib</div>
+      <div class="card-desc i18n" data-de="Pub/Sub-Informationsverteilung." data-en="Publish/subscribe information distribution.">Pub/Sub-Informationsverteilung.</div>
+      <div class="card-chips"><span class="chip i18n" data-de="Pub/Sub" data-en="Pub/Sub">Pub/Sub</span><span class="chip i18n" data-de="Verteilung" data-en="Distribution">Verteilung</span><span class="chip i18n" data-de="entkoppelt" data-en="decoupled">entkoppelt</span></div>
+      <span class="card-link"><span class="i18n" data-de="Vorstellung" data-en="Details">Vorstellung</span> <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+    </a>
+    <a href="libs/TwistAsyncComBridgeLib.html" class="lib-card teal">
+      <div class="card-icon teal">&#x1F309;</div>
+      <span class="card-ns i18n" data-de="Async-Bridge" data-en="Async bridge">Async-Bridge</span>
+      <div class="card-title">TwistAsyncComBridgeLib</div>
+      <div class="card-desc i18n" data-de="Asynchrone Br&uuml;cke zwischen Kommunikationswelten." data-en="An asynchronous bridge between communication worlds.">Asynchrone Br&uuml;cke zwischen Kommunikationswelten.</div>
+      <div class="card-chips"><span class="chip i18n" data-de="async" data-en="async">async</span><span class="chip i18n" data-de="Bridge" data-en="Bridge">Bridge</span><span class="chip i18n" data-de="Messaging" data-en="Messaging">Messaging</span></div>
+      <span class="card-link"><span class="i18n" data-de="Vorstellung" data-en="Details">Vorstellung</span> <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+    </a>
+  </div>
+</section>
+<div class="divider"></div>
+<section id="cat4" style="padding-top:40px;padding-bottom:40px">
+  <div class="section-label i18n" data-de="Events" data-en="Events">Events</div>
+  <h2 class="section-title i18n" data-de="Events" data-en="Events">Events</h2>
+  <div class="lib-grid">
+    <a href="libs/TwistTriggerLib.html" class="lib-card orange">
+      <div class="card-icon orange">&#x26A1;</div>
+      <span class="card-ns i18n" data-de="Event / Trigger" data-en="Event / Trigger">Event / Trigger</span>
+      <div class="card-title">TwistTriggerLib</div>
+      <div class="card-desc i18n" data-de="Ein Event- und Trigger-System." data-en="An event and trigger system.">Ein Event- und Trigger-System.</div>
+      <div class="card-chips"><span class="chip i18n" data-de="Events" data-en="Events">Events</span><span class="chip i18n" data-de="Trigger" data-en="Triggers">Trigger</span><span class="chip i18n" data-de="reaktiv" data-en="reactive">reaktiv</span></div>
+      <span class="card-link"><span class="i18n" data-de="Vorstellung" data-en="Details">Vorstellung</span> <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+    </a>
+  </div>
+</section>
+<div class="divider"></div>
+<section id="cat5" style="padding-top:40px;padding-bottom:40px">
+  <div class="section-label i18n" data-de="Bots, Plugins &amp; KI" data-en="Bots, Plugins &amp; AI">Bots, Plugins &amp; KI</div>
+  <h2 class="section-title i18n" data-de="Bots, Plugins &amp; KI" data-en="Bots, Plugins &amp; AI">Bots, Plugins &amp; KI</h2>
+  <div class="lib-grid">
+    <a href="libs/TwistPlugInControlLib.html" class="lib-card purple">
+      <div class="card-icon purple">&#x1F9E9;</div>
+      <span class="card-ns i18n" data-de="Plugin-Management" data-en="Plugin management">Plugin-Management</span>
+      <div class="card-title">TwistPlugInControlLib</div>
+      <div class="card-desc i18n" data-de="Plugin-Management f&uuml;r Bot-Systeme." data-en="Plugin management for bot systems.">Plugin-Management f&uuml;r Bot-Systeme.</div>
+      <div class="card-chips"><span class="chip i18n" data-de="Plugins" data-en="Plugins">Plugins</span><span class="chip i18n" data-de="Bots" data-en="Bots">Bots</span><span class="chip i18n" data-de="Laufzeit" data-en="Runtime">Laufzeit</span></div>
+      <span class="card-link"><span class="i18n" data-de="Vorstellung" data-en="Details">Vorstellung</span> <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+    </a>
+    <a href="libs/TwistIndicatorBotLib.html" class="lib-card blue">
+      <div class="card-icon blue">&#x1F4C8;</div>
+      <span class="card-ns i18n" data-de="Indikator-Bots" data-en="Indicator bots">Indikator-Bots</span>
+      <div class="card-title">TwistIndicatorBotLib</div>
+      <div class="card-desc i18n" data-de="Indikator-Bots f&uuml;r technische Analyse." data-en="Indicator bots for technical analysis.">Indikator-Bots f&uuml;r technische Analyse.</div>
+      <div class="card-chips"><span class="chip i18n" data-de="Indikatoren" data-en="Indicators">Indikatoren</span><span class="chip i18n" data-de="Analyse" data-en="Analysis">Analyse</span><span class="chip i18n" data-de="Bots" data-en="Bots">Bots</span></div>
+      <span class="card-link"><span class="i18n" data-de="Vorstellung" data-en="Details">Vorstellung</span> <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+    </a>
+    <a href="libs/TwistCursorProcessBotContextLib.html" class="lib-card purple">
+      <div class="card-icon purple">&#x1F916;</div>
+      <span class="card-ns i18n" data-de="Bot-Kontext" data-en="Bot context">Bot-Kontext</span>
+      <div class="card-title">TwistCursorProcessBotContextLib</div>
+      <div class="card-desc i18n" data-de="Laufzeit-Kontext f&uuml;r datenverarbeitende Prozess-Bots." data-en="Runtime context for data-processing process bots.">Laufzeit-Kontext f&uuml;r datenverarbeitende Prozess-Bots.</div>
+      <div class="card-chips"><span class="chip i18n" data-de="Bot-Kontext" data-en="Bot context">Bot-Kontext</span><span class="chip i18n" data-de="Process-Bots" data-en="Process bots">Process-Bots</span><span class="chip i18n" data-de="Tasks" data-en="Tasks">Tasks</span></div>
+      <span class="card-link"><span class="i18n" data-de="Vorstellung" data-en="Details">Vorstellung</span> <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+    </a>
+    <a href="libs/TwistMindCommandBotContextLib.html" class="lib-card purple">
+      <div class="card-icon purple">&#x1F9E0;</div>
+      <span class="card-ns i18n" data-de="KI-Kommando-Kontext" data-en="AI command context">KI-Kommando-Kontext</span>
+      <div class="card-title">TwistMindCommandBotContextLib</div>
+      <div class="card-desc i18n" data-de="Kontext f&uuml;r KI-gesteuerte Kommando-Bots." data-en="Context for AI-driven command bots.">Kontext f&uuml;r KI-gesteuerte Kommando-Bots.</div>
+      <div class="card-chips"><span class="chip i18n" data-de="MindCommand" data-en="MindCommand">MindCommand</span><span class="chip i18n" data-de="KI-Werkzeuge" data-en="AI tools">KI-Werkzeuge</span><span class="chip i18n" data-de="Kontext" data-en="Context">Kontext</span></div>
+      <span class="card-link"><span class="i18n" data-de="Vorstellung" data-en="Details">Vorstellung</span> <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+    </a>
+    <a href="libs/TwistLlamaLib.html" class="lib-card orange">
+      <div class="card-icon orange">&#x1F999;</div>
+      <span class="card-ns i18n" data-de="LLM-Integration" data-en="LLM integration">LLM-Integration</span>
+      <div class="card-title">TwistLlamaLib</div>
+      <div class="card-desc i18n" data-de="Native Anbindung lokaler Sprachmodelle." data-en="Native integration of local language models.">Native Anbindung lokaler Sprachmodelle.</div>
+      <div class="card-chips"><span class="chip i18n" data-de="LLM" data-en="LLM">LLM</span><span class="chip i18n" data-de="libllama" data-en="libllama">libllama</span><span class="chip i18n" data-de="lokal" data-en="local">lokal</span></div>
+      <span class="card-link"><span class="i18n" data-de="Vorstellung" data-en="Details">Vorstellung</span> <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+    </a>
+  </div>
+</section>
+
+<div class="divider"></div>
+<div class="cta-wrap">
+  <h2 class="i18n" data-de="Ein System, das f&uuml;r sich spricht." data-en="A system that speaks for itself.">Ein System, das f&uuml;r sich spricht.</h2>
+  <p class="i18n" data-de="Entworfen, gebaut und weiterentwickelt von einer einzelnen Person." data-en="Designed, built and evolved by a single person.">Entworfen, gebaut und weiterentwickelt von einer einzelnen Person.</p>
+  <div class="cta-btns">
+    <a class="btn btn-primary" href="#libs"><span class="i18n" data-de="Bibliotheken entdecken" data-en="Explore the libraries">Bibliotheken entdecken</span></a>
+    <a class="btn btn-ghost" href="#mvp"><span class="i18n" data-de="Produkt-Vision" data-en="Product vision">Produkt-Vision</span></a>
+  </div>
+</div>
+<footer>
+  <div class="fl">
+    <span class="fl-logo">TwistWorld</span>
+    <span style="color:var(--border2)">|</span>
+    <code>C++23 &middot; Linux / Unix</code>
+    <span style="color:var(--border2)">|</span>
+    <span>Designed, created &amp; developed by <strong>Stephan Greiner</strong></span>
+  </div>
+  <div class="fr"><span class="i18n" data-de="Modulares C++23-&Ouml;kosystem" data-en="Modular C++23 ecosystem">Modulares C++23-&Ouml;kosystem</span></div>
+</footer>
+<script>
+(function(){
+ function apply(l){
+   document.querySelectorAll('.i18n').forEach(function(e){ if(e.dataset[l]!=null) e.innerHTML=e.dataset[l]; });
+   document.documentElement.lang=l;
+   document.querySelectorAll('.lt').forEach(function(b){ b.classList.toggle('on', b.dataset.lang===l); });
+   try{localStorage.setItem('twlang',l);}catch(e){}
+ }
+ var saved=null; try{saved=localStorage.getItem('twlang');}catch(e){}
+ var lang=saved||(((navigator.language||'de').slice(0,2)==='de')?'de':'en');
+ document.addEventListener('click',function(ev){var b=ev.target.closest('.lt'); if(b) apply(b.dataset.lang);});
+ if(document.readyState!=='loading') apply(lang);
+ else document.addEventListener('DOMContentLoaded',function(){apply(lang);});
+})();
+</script>
+</body>
+</html>
