@@ -236,16 +236,17 @@
   <div class="topbar-right"><a href="../index.html" class="btn btn-ghost btn-sm i18n" data-de="&larr; Alle Bibliotheken" data-en="&larr; All libraries">&larr; Alle Bibliotheken</a><div class="langtoggle"><button class="lt" data-lang="de">DE</button><button class="lt" data-lang="en">EN</button></div></div>
 </header>
 <div class="hero" style="padding:88px 52px 64px">
-  <div class="hero-eyebrow i18n" data-de="DSL-Factory-PlugIns &middot; DSL-Engine" data-en="DSL factory plugins &middot; DSL Engine">DSL-Factory-PlugIns &middot; DSL-Engine</div>
+  <div class="hero-eyebrow i18n" data-de="DSL-Engine &amp; Factory-PlugIns &middot; DSL-Engine" data-en="DSL engine & factory plugins &middot; DSL Engine">DSL-Engine &amp; Factory-PlugIns &middot; DSL-Engine</div>
   <h1 style="font-size:clamp(2.2rem,5vw,3.6rem)"><span class="world">TwistDSLFactoryParserContextLib</span></h1>
-  <p class="hero-sub i18n" data-de="Pro Sprache ein zur Laufzeit ladbares Tokenizer- und Factory-Plugin." data-en="One runtime-loadable tokenizer and factory plugin per language.">Pro Sprache ein zur Laufzeit ladbares Tokenizer- und Factory-Plugin.</p>
-  <div class="hero-tags"><span class="tag i18n" data-de="Factory-Plugins" data-en="Factory plugins">Factory-Plugins</span><span class="tag i18n" data-de="Parser" data-en="Parser">Parser</span><span class="tag i18n" data-de="erweiterbar" data-en="extensible">erweiterbar</span></div>
+  <p class="hero-sub i18n" data-de="Die DSL-Engine: f&uuml;hrt die Skriptsprache aus und l&auml;dt pro Sprache ein Tokenizer-/Factory-Plugin." data-en="The DSL engine: runs the scripting language and loads a tokenizer/factory plugin per language.">Die DSL-Engine: f&uuml;hrt die Skriptsprache aus und l&auml;dt pro Sprache ein Tokenizer-/Factory-Plugin.</p>
+  <div class="hero-tags"><span class="tag i18n" data-de="Tokenize&rarr;Execute" data-en="Tokenize&rarr;Execute">Tokenize&rarr;Execute</span><span class="tag i18n" data-de="Factory-Plugins" data-en="Factory plugins">Factory-Plugins</span><span class="tag i18n" data-de="Kontrollfluss" data-en="Control flow">Kontrollfluss</span><span class="tag i18n" data-de="erweiterbar" data-en="extensible">erweiterbar</span></div>
 </div>
 <div class="divider"></div>
 <section>
   <div class="section-label i18n" data-de="&Uuml;berblick" data-en="Overview">&Uuml;berblick</div>
   <h2 class="section-title i18n" data-de="Was ist TwistDSLFactoryParserContextLib?" data-en="What is TwistDSLFactoryParserContextLib?">Was ist TwistDSLFactoryParserContextLib?</h2>
-  <p class="section-sub i18n" data-de="Orchestriert die DSL-Bauphasen und kapselt sprachspezifisches Parsen in austauschbare Plugins. So l&auml;sst sich pro Zielsprache ein eigenes Factory-/Tokenizer-Plugin zur Laufzeit laden; C++ ist umgesetzt, weitere Sprachen k&ouml;nnen folgen." data-en="Orchestrates the DSL build phases and encapsulates language-specific parsing in interchangeable plugins. A dedicated factory/tokenizer plugin can be loaded at runtime per target language; C++ is implemented, more languages can follow.">Orchestriert die DSL-Bauphasen und kapselt sprachspezifisches Parsen in austauschbare Plugins. So l&auml;sst sich pro Zielsprache ein eigenes Factory-/Tokenizer-Plugin zur Laufzeit laden; C++ ist umgesetzt, weitere Sprachen k&ouml;nnen folgen.</p>
+  <p class="section-sub i18n" data-de="F&uuml;hrt eine C++-&auml;hnliche DSL in vier Phasen aus &mdash; <strong>Tokenize &rarr; Parse &rarr; Integrity-Check &rarr; Execute</strong> &mdash; mit Kontrollfluss (if/for/while/do/switch) und Funktionsaufrufen. Der Integrity-Check pr&uuml;ft Typen und Signaturen bereits vor der Ausf&uuml;hrung." data-en="Runs a C++-like DSL in four phases &mdash; <strong>Tokenize &rarr; Parse &rarr; Integrity check &rarr; Execute</strong> &mdash; with control flow (if/for/while/do/switch) and function calls. The integrity check validates types and signatures before execution.">F&uuml;hrt eine C++-&auml;hnliche DSL in vier Phasen aus &mdash; <strong>Tokenize &rarr; Parse &rarr; Integrity-Check &rarr; Execute</strong> &mdash; mit Kontrollfluss (if/for/while/do/switch) und Funktionsaufrufen. Der Integrity-Check pr&uuml;ft Typen und Signaturen bereits vor der Ausf&uuml;hrung.</p>
+  <p class="section-sub i18n" data-de="Sprachspezifisches Parsen ist in austauschbare Plugins gekapselt: pro Zielsprache ein eigenes Factory-/Tokenizer-Plugin, zur Laufzeit ladbar. C++ ist umgesetzt, weitere Sprachen k&ouml;nnen folgen." data-en="Language-specific parsing is encapsulated in interchangeable plugins: one factory/tokenizer plugin per target language, loadable at runtime. C++ is implemented, more languages can follow.">Sprachspezifisches Parsen ist in austauschbare Plugins gekapselt: pro Zielsprache ein eigenes Factory-/Tokenizer-Plugin, zur Laufzeit ladbar. C++ ist umgesetzt, weitere Sprachen k&ouml;nnen folgen.</p>
 </section>
 <div class="divider"></div>
 <section>
@@ -253,12 +254,16 @@
   <h2 class="section-title i18n" data-de="Was diese Bibliothek leistet" data-en="What this library does">Was diese Bibliothek leistet</h2>
   <div class="eng-grid">
     <div class="eng-card">
-      <h3><span class="ec-icon">&#x1F3ED;</span> <span class="i18n" data-de="Factory-Plugins" data-en="Factory plugins">Factory-Plugins</span></h3>
-      <p class="i18n" data-de="Sprachspezifisches Parsen als austauschbares Modul." data-en="Language-specific parsing as a swappable module.">Sprachspezifisches Parsen als austauschbares Modul.</p>
+      <h3><span class="ec-icon">&#x1F501;</span> <span class="i18n" data-de="Vierphasige Pipeline" data-en="Four-phase pipeline">Vierphasige Pipeline</span></h3>
+      <p class="i18n" data-de="Tokenize &rarr; Parse &rarr; Integrity-Check &rarr; Execute &mdash; statische Sicherheit vor der Ausf&uuml;hrung." data-en="Tokenize &rarr; Parse &rarr; Integrity check &rarr; Execute &mdash; static safety before execution.">Tokenize &rarr; Parse &rarr; Integrity-Check &rarr; Execute &mdash; statische Sicherheit vor der Ausf&uuml;hrung.</p>
     </div>
     <div class="eng-card">
-      <h3><span class="ec-icon">&#x1F9E9;</span> <span class="i18n" data-de="Phasen-Orchestrierung" data-en="Phase orchestration">Phasen-Orchestrierung</span></h3>
-      <p class="i18n" data-de="F&uuml;hrt Tokenizer, Parser und Aufbau geordnet zusammen." data-en="Brings tokenizer, parser and build together in order.">F&uuml;hrt Tokenizer, Parser und Aufbau geordnet zusammen.</p>
+      <h3><span class="ec-icon">&#x1F3ED;</span> <span class="i18n" data-de="Factory-Plugins" data-en="Factory plugins">Factory-Plugins</span></h3>
+      <p class="i18n" data-de="Sprachspezifisches Parsen als austauschbares, zur Laufzeit ladbares Modul." data-en="Language-specific parsing as a swappable module loaded at runtime.">Sprachspezifisches Parsen als austauschbares, zur Laufzeit ladbares Modul.</p>
+    </div>
+    <div class="eng-card">
+      <h3><span class="ec-icon">&#x1F500;</span> <span class="i18n" data-de="Kontrollfluss & Funktionen" data-en="Control flow & functions">Kontrollfluss & Funktionen</span></h3>
+      <p class="i18n" data-de="Verzweigungen, Schleifen, Schalter und Funktionsaufrufe." data-en="Branches, loops, switches and function calls.">Verzweigungen, Schleifen, Schalter und Funktionsaufrufe.</p>
     </div>
   </div>
 </section>
