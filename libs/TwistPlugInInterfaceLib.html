@@ -235,17 +235,18 @@
   
   <div class="topbar-right"><a href="../index.html" class="btn btn-ghost btn-sm i18n" data-de="&larr; Alle Bibliotheken" data-en="&larr; All libraries">&larr; Alle Bibliotheken</a><div class="langtoggle"><button class="lt" data-lang="de">DE</button><button class="lt" data-lang="en">EN</button></div></div>
 </header>
+
 <div class="hero" style="padding:88px 52px 64px">
-  <div class="hero-eyebrow i18n" data-de="Interfaces &middot; Kern &amp; Basis" data-en="Interfaces &middot; Core &amp; Foundation">Interfaces &middot; Kern &amp; Basis</div>
-  <h1 style="font-size:clamp(2.2rem,5vw,3.6rem)"><span class="world">TwistInterfaceLib</span></h1>
-  <p class="hero-sub i18n" data-de="Die abstrakten Vertr&auml;ge, die das &Ouml;kosystem entkoppeln." data-en="The abstract contracts that decouple the ecosystem.">Die abstrakten Vertr&auml;ge, die das &Ouml;kosystem entkoppeln.</p>
-  <div class="hero-tags"><span class="tag i18n" data-de="Interfaces" data-en="Interfaces">Interfaces</span><span class="tag i18n" data-de="Cursor" data-en="Cursor">Cursor</span><span class="tag i18n" data-de="DataFrame" data-en="DataFrame">DataFrame</span><span class="tag i18n" data-de="Entkopplung" data-en="Decoupling">Entkopplung</span></div>
+  <div class="hero-eyebrow i18n" data-de="PlugIn-Vertr&auml;ge &middot; Kern &amp; Basis" data-en="Plugin contracts &middot; Core &amp; Foundation">PlugIn-Vertr&auml;ge &middot; Kern &amp; Basis</div>
+  <h1 style="font-size:clamp(2.2rem,5vw,3.6rem)"><span class="world">TwistPlugInInterfaceLib</span></h1>
+  <p class="hero-sub i18n" data-de="Was ein PlugIn ist &mdash; festgelegt, bevor eines geladen wird." data-en="What a plugin is &mdash; defined before any plugin is loaded.">Was ein PlugIn ist &mdash; festgelegt, bevor eines geladen wird.</p>
+  <div class="hero-tags"><span class="tag i18n" data-de="PlugIn-Vertr&auml;ge" data-en="Plugin contracts">PlugIn-Vertr&auml;ge</span><span class="tag i18n" data-de="Schicht" data-en="Layer">Schicht</span><span class="tag i18n" data-de="Laufzeit-Laden" data-en="Runtime loading">Laufzeit-Laden</span><span class="tag i18n" data-de="IGraphEngine" data-en="IGraphEngine">IGraphEngine</span></div>
 </div>
 <div class="divider"></div>
 <section>
   <div class="section-label i18n" data-de="&Uuml;berblick" data-en="Overview">&Uuml;berblick</div>
-  <h2 class="section-title i18n" data-de="Was ist TwistInterfaceLib?" data-en="What is TwistInterfaceLib?">Was ist TwistInterfaceLib?</h2>
-  <p class="section-sub i18n" data-de="Eine reine Schnittstellen-Bibliothek: abstrakte Interfaces f&uuml;r DataFrames, Cursor und weitere Kernkonzepte. Sie ist das <strong>Blatt</strong> des &Ouml;kosystems &mdash; sie h&auml;ngt an keiner anderen TwistLib, nur an fmt, spdlog und Boost. Die PlugIn-Vertr&auml;ge liegen bewusst nicht hier, sondern eine Schicht h&ouml;her in der <a href="TwistPlugInInterfaceLib.html" style="color:var(--accent2)">TwistPlugInInterfaceLib</a>: Deren Fabrikmethoden brauchen einen Konfigurationsbaum und w&uuml;rden die Abh&auml;ngigkeitsfreiheit zerst&ouml;ren." data-en="A pure interface library: abstract interfaces for DataFrames, cursors and other core concepts. It is the <strong>leaf</strong> of the ecosystem &mdash; it depends on no other TwistLib, only on fmt, spdlog and Boost. The plugin contracts deliberately do not live here but one layer up in <a href="TwistPlugInInterfaceLib.html" style="color:var(--accent2)">TwistPlugInInterfaceLib</a>: their factory methods need a configuration tree and would destroy that freedom from dependencies.">Eine reine Schnittstellen-Bibliothek: abstrakte Interfaces f&uuml;r DataFrames, Cursor und weitere Kernkonzepte. Sie ist das <strong>Blatt</strong> des &Ouml;kosystems &mdash; sie h&auml;ngt an keiner anderen TwistLib, nur an fmt, spdlog und Boost. Die PlugIn-Vertr&auml;ge liegen bewusst nicht hier, sondern eine Schicht h&ouml;her in der <a href="TwistPlugInInterfaceLib.html" style="color:var(--accent2)">TwistPlugInInterfaceLib</a>: Deren Fabrikmethoden brauchen einen Konfigurationsbaum und w&uuml;rden die Abh&auml;ngigkeitsfreiheit zerst&ouml;ren.</p>
+  <h2 class="section-title i18n" data-de="Was ist TwistPlugInInterfaceLib?" data-en="What is TwistPlugInInterfaceLib?">Was ist TwistPlugInInterfaceLib?</h2>
+  <p class="section-sub i18n" data-de="Hier liegt, was ein Rufer kennen muss, <em>bevor</em> er ein PlugIn l&auml;dt: die Gattungen (<code>PlugInType</code>), die Fabrikmethoden und die Vertr&auml;ge &uuml;ber austauschbare Technologien. Ein Vertrag kann nicht in dem liegen, was nachgeladen wird &mdash; darum eine eigene Schicht. Sie sitzt &uuml;ber TwistTypes, deshalb ist <code>strVal</code> in diesen Schnittstellen m&ouml;glich." data-en="This is what a caller must know <em>before</em> loading a plugin: the plugin kinds (<code>PlugInType</code>), the factory methods and the contracts for interchangeable technologies. A contract cannot live inside the thing being loaded &mdash; hence its own layer. It sits above TwistTypes, so <code>strVal</code> is available in these interfaces.">Hier liegt, was ein Rufer kennen muss, <em>bevor</em> er ein PlugIn l&auml;dt: die Gattungen (<code>PlugInType</code>), die Fabrikmethoden und die Vertr&auml;ge &uuml;ber austauschbare Technologien. Ein Vertrag kann nicht in dem liegen, was nachgeladen wird &mdash; darum eine eigene Schicht. Sie sitzt &uuml;ber TwistTypes, deshalb ist <code>strVal</code> in diesen Schnittstellen m&ouml;glich.</p>
 </section>
 <div class="divider"></div>
 <section>
@@ -253,16 +254,16 @@
   <h2 class="section-title i18n" data-de="Was diese Bibliothek leistet" data-en="What this library does">Was diese Bibliothek leistet</h2>
   <div class="eng-grid">
     <div class="eng-card">
-      <h3><span class="ec-icon">&#x1F517;</span> <span class="i18n" data-de="Entkopplung" data-en="Decoupling">Entkopplung</span></h3>
-      <p class="i18n" data-de="Module h&auml;ngen an Interfaces, nicht an Implementierungen." data-en="Modules depend on interfaces, not implementations.">Module h&auml;ngen an Interfaces, nicht an Implementierungen.</p>
+      <h3><span class="ec-icon">&#x1F4DC;</span> <span class="i18n" data-de="Vertr&auml;ge vor dem Laden" data-en="Contracts before loading">Vertr&auml;ge vor dem Laden</span></h3>
+      <p class="i18n" data-de="Neun PlugIn-Schnittstellen an einem Ort &mdash; von <code>ITwistBasePlugIn</code> bis <code>IMindQueryGraph_PlugIn</code>. Wer l&auml;dt, kennt den Vertrag vorher." data-en="Nine plugin interfaces in one place &mdash; from <code>ITwistBasePlugIn</code> to <code>IMindQueryGraph_PlugIn</code>. Whoever loads knows the contract beforehand.">Neun PlugIn-Schnittstellen an einem Ort &mdash; von <code>ITwistBasePlugIn</code> bis <code>IMindQueryGraph_PlugIn</code>. Wer l&auml;dt, kennt den Vertrag vorher.</p>
     </div>
     <div class="eng-card">
-      <h3><span class="ec-icon">&#x1F501;</span> <span class="i18n" data-de="Austauschbarkeit" data-en="Interchangeability">Austauschbarkeit</span></h3>
-      <p class="i18n" data-de="Implementierungen lassen sich ersetzen, ohne Konsumenten zu ber&uuml;hren." data-en="Implementations can be swapped without touching consumers.">Implementierungen lassen sich ersetzen, ohne Konsumenten zu ber&uuml;hren.</p>
+      <h3><span class="ec-icon">&#x1F9F1;</span> <span class="i18n" data-de="Eigene Schicht statt Blatt" data-en="Its own layer, not the leaf">Eigene Schicht statt Blatt</span></h3>
+      <p class="i18n" data-de="Nicht in der TwistInterfaceLib: Jene ist das abh&auml;ngigkeitsfreie Blatt. Die PlugIn-Fabriken nehmen einen Konfigurationsbaum und ziehen damit den TwistDataTreeContainer herein &mdash; diese versteckte Abh&auml;ngigkeit wird hier sichtbar." data-en="Not in TwistInterfaceLib: that one is the dependency-free leaf. Plugin factories take a configuration tree and thus pull in TwistDataTreeContainer &mdash; a hidden dependency made explicit here.">Nicht in der TwistInterfaceLib: Jene ist das abh&auml;ngigkeitsfreie Blatt. Die PlugIn-Fabriken nehmen einen Konfigurationsbaum und ziehen damit den TwistDataTreeContainer herein &mdash; diese versteckte Abh&auml;ngigkeit wird hier sichtbar.</p>
     </div>
     <div class="eng-card">
-      <h3><span class="ec-icon">&#x1F343;</span> <span class="i18n" data-de="Das Blatt" data-en="The leaf">Das Blatt</span></h3>
-      <p class="i18n" data-de="Ganz unten im Stapel, ohne Abh&auml;ngigkeit zu einer anderen TwistLib &mdash; darum kann jede Schicht dar&uuml;ber sie einbinden." data-en="At the very bottom of the stack, depending on no other TwistLib &mdash; which is why every layer above can include it.">Ganz unten im Stapel, ohne Abh&auml;ngigkeit zu einer anderen TwistLib &mdash; darum kann jede Schicht dar&uuml;ber sie einbinden.</p>
+      <h3><span class="ec-icon">&#x1F501;</span> <span class="i18n" data-de="Austauschbare Technologie" data-en="Interchangeable technology">Austauschbare Technologie</span></h3>
+      <p class="i18n" data-de="<code>IGraphEngine</code> fasst die Graphentechnologie hinter einer Schnittstelle: anmelden, einreichen, antworten. So l&auml;sst sich sp&auml;ter eine andere Technologie dahinter setzen, ohne die Rufer anzufassen." data-en="<code>IGraphEngine</code> wraps the graph technology behind one interface: attach, submit, answer. A different technology can later sit behind it without touching callers."><code>IGraphEngine</code> fasst die Graphentechnologie hinter einer Schnittstelle: anmelden, einreichen, antworten. So l&auml;sst sich sp&auml;ter eine andere Technologie dahinter setzen, ohne die Rufer anzufassen.</p>
     </div>
   </div>
 </section>
@@ -292,4 +293,5 @@
 })();
 </script>
 </body>
+
 </html>

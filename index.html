@@ -246,7 +246,7 @@
   </div>
   <div class="hero-tags">
     <span class="tag hi">C++23</span><span class="tag">GCC 13+ / Clang 17+</span>
-    <span class="tag gr">Linux / Unix</span><span class="tag">CMake</span><span class="tag or">Conan</span>
+    <span class="tag gr">Linux / Unix</span><span class="tag">CMake</span><span class="tag or">vcpkg</span>
     <span class="tag">Type Erasure</span><span class="tag pu">DSL-Engine</span>
     <span class="tag">MQTT</span><span class="tag">WebSocket</span><span class="tag pu">CUDA / LibTorch</span>
     <span class="tag gr">Qdrant</span><span class="tag">spdlog &middot; boost &middot; etl</span>
@@ -319,7 +319,7 @@
   <div class="section-label i18n" data-de="Was technisch dahintersteckt" data-en="The engineering behind it">Was technisch dahintersteckt</div>
   <h2 class="section-title i18n" data-de="Engineering-Highlights" data-en="Engineering highlights">Engineering-Highlights</h2>
   <p class="section-sub i18n" data-de="Einige der Entwurfsentscheidungen, auf die es ankommt &mdash; bewusst als Beleg f&uuml;r anspruchsvolles Systems-Engineering." data-en="A few of the design decisions that matter &mdash; deliberately built as evidence of serious systems engineering.">Einige der Entwurfsentscheidungen, auf die es ankommt &mdash; bewusst als Beleg f&uuml;r anspruchsvolles Systems-Engineering.</p>
-  <div class="eng-grid"><div class="eng-card"><h3><span class="ec-icon">&#x1F9E9;</span> <span class="i18n" data-de="Type Erasure &uuml;ber .so-Grenzen" data-en="Type erasure across .so boundaries">Type Erasure &uuml;ber .so-Grenzen</span></h3><p class="i18n" data-de="C++-Templates lassen sich nicht ohne Weiteres &uuml;ber Shared-Library-Grenzen ausliefern. TwistWorld l&ouml;st das mit einem typausgel&ouml;schten Handle samt Small-Object-Optimierung &mdash; generische Operatoren funktionieren ABI-stabil &uuml;ber <code>.so</code>-Grenzen hinweg." data-en="C++ templates can't simply be shipped across shared-library boundaries. TwistWorld solves this with a type-erased handle plus small-object optimization &mdash; generic operators work ABI-stable across <code>.so</code> boundaries.">C++-Templates lassen sich nicht ohne Weiteres &uuml;ber Shared-Library-Grenzen ausliefern. TwistWorld l&ouml;st das mit einem typausgel&ouml;schten Handle samt Small-Object-Optimierung &mdash; generische Operatoren funktionieren ABI-stabil &uuml;ber <code>.so</code>-Grenzen hinweg.</p></div><div class="eng-card"><h3><span class="ec-icon">&#x1F501;</span> <span class="i18n" data-de="Austauschbare DSL-Sprache" data-en="Swappable DSL language">Austauschbare DSL-Sprache</span></h3><p class="i18n" data-de="Eine vollst&auml;ndige, typsichere Skriptsprache von Grund auf &mdash; <strong>Tokenize &rarr; Parse &rarr; Integrity-Check &rarr; Execute</strong>. Der Clou: Tokenizer und Parser-Factory sind PlugIns. Ein <strong>Sprachwechsel tauscht beide als Paar aus</strong> &mdash; die Engine selbst bleibt gleich." data-en="A complete, type-safe scripting language from scratch &mdash; <strong>Tokenize &rarr; Parse &rarr; Integrity check &rarr; Execute</strong>. The twist: the tokenizer and parser factory are plugins. <strong>Switching language swaps both as a pair</strong> &mdash; the engine itself stays the same.">Eine vollst&auml;ndige, typsichere Skriptsprache von Grund auf &mdash; <strong>Tokenize &rarr; Parse &rarr; Integrity-Check &rarr; Execute</strong>. Der Clou: Tokenizer und Parser-Factory sind PlugIns. Ein <strong>Sprachwechsel tauscht beide als Paar aus</strong> &mdash; die Engine selbst bleibt gleich.</p></div><div class="eng-card"><h3><span class="ec-icon">&#x26A1;</span> <span class="i18n" data-de="Heap-frei & echtzeitnah" data-en="Heap-free & real-time">Heap-frei & echtzeitnah</span></h3><p class="i18n" data-de="Small-Buffer-optimierte Laufzeitwerte, atomare Ringpuffer und ein leichter RW-Lock &mdash; bewusst auf <strong>vorhersagbare Latenz</strong> und minimale Heap-Allokation ausgelegt statt auf bequeme Standard-Container." data-en="Small-buffer-optimized runtime values, atomic ring buffers and a lightweight RW lock &mdash; deliberately built for <strong>predictable latency</strong> and minimal heap allocation instead of convenient standard containers.">Small-Buffer-optimierte Laufzeitwerte, atomare Ringpuffer und ein leichter RW-Lock &mdash; bewusst auf <strong>vorhersagbare Latenz</strong> und minimale Heap-Allokation ausgelegt statt auf bequeme Standard-Container.</p></div><div class="eng-card"><h3><span class="ec-icon">&#x1F9F0;</span> <span class="i18n" data-de="Eigenes Build- & Plugin-Framework" data-en="Custom build & plugin framework">Eigenes Build- & Plugin-Framework</span></h3><p class="i18n" data-de="Ein konventionsbasiertes CMake-Framework generiert Konsumenten-Interfaces automatisch und zieht transitive Abh&auml;ngigkeiten in einer Zeile auf. Bots und KI-Werkzeuge werden als <code>.so</code>-Plugins <strong>zur Laufzeit</strong> geladen." data-en="A convention-based CMake framework generates consumer interfaces automatically and pulls transitive dependencies in a single line. Bots and AI tools are loaded as <code>.so</code> plugins <strong>at runtime</strong>.">Ein konventionsbasiertes CMake-Framework generiert Konsumenten-Interfaces automatisch und zieht transitive Abh&auml;ngigkeiten in einer Zeile auf. Bots und KI-Werkzeuge werden als <code>.so</code>-Plugins <strong>zur Laufzeit</strong> geladen.</p></div></div>
+  <div class="eng-grid"><div class="eng-card"><h3><span class="ec-icon">&#x1F9E9;</span> <span class="i18n" data-de="Type Erasure &uuml;ber .so-Grenzen" data-en="Type erasure across .so boundaries">Type Erasure &uuml;ber .so-Grenzen</span></h3><p class="i18n" data-de="C++-Templates lassen sich nicht ohne Weiteres &uuml;ber Shared-Library-Grenzen ausliefern. TwistWorld l&ouml;st das mit einem typausgel&ouml;schten Handle samt Small-Object-Optimierung &mdash; generische Operatoren funktionieren ABI-stabil &uuml;ber <code>.so</code>-Grenzen hinweg." data-en="C++ templates can't simply be shipped across shared-library boundaries. TwistWorld solves this with a type-erased handle plus small-object optimization &mdash; generic operators work ABI-stable across <code>.so</code> boundaries.">C++-Templates lassen sich nicht ohne Weiteres &uuml;ber Shared-Library-Grenzen ausliefern. TwistWorld l&ouml;st das mit einem typausgel&ouml;schten Handle samt Small-Object-Optimierung &mdash; generische Operatoren funktionieren ABI-stabil &uuml;ber <code>.so</code>-Grenzen hinweg.</p></div><div class="eng-card"><h3><span class="ec-icon">&#x1F501;</span> <span class="i18n" data-de="Austauschbare DSL-Sprache" data-en="Swappable DSL language">Austauschbare DSL-Sprache</span></h3><p class="i18n" data-de="Eine vollst&auml;ndige, typsichere Skriptsprache von Grund auf &mdash; <strong>Tokenize &rarr; Parse &rarr; Integrity-Check &rarr; Execute</strong>. Der Clou: Tokenizer und Parser-Factory sind PlugIns. Ein <strong>Sprachwechsel tauscht beide als Paar aus</strong> &mdash; die Engine selbst bleibt gleich." data-en="A complete, type-safe scripting language from scratch &mdash; <strong>Tokenize &rarr; Parse &rarr; Integrity check &rarr; Execute</strong>. The twist: the tokenizer and parser factory are plugins. <strong>Switching language swaps both as a pair</strong> &mdash; the engine itself stays the same.">Eine vollst&auml;ndige, typsichere Skriptsprache von Grund auf &mdash; <strong>Tokenize &rarr; Parse &rarr; Integrity-Check &rarr; Execute</strong>. Der Clou: Tokenizer und Parser-Factory sind PlugIns. Ein <strong>Sprachwechsel tauscht beide als Paar aus</strong> &mdash; die Engine selbst bleibt gleich.</p></div><div class="eng-card"><h3><span class="ec-icon">&#x26A1;</span> <span class="i18n" data-de="Heap-frei & echtzeitnah" data-en="Heap-free & real-time">Heap-frei & echtzeitnah</span></h3><p class="i18n" data-de="Small-Buffer-optimierte Laufzeitwerte, atomare Ringpuffer und ein leichter RW-Lock &mdash; bewusst auf <strong>vorhersagbare Latenz</strong> und minimale Heap-Allokation ausgelegt statt auf bequeme Standard-Container." data-en="Small-buffer-optimized runtime values, atomic ring buffers and a lightweight RW lock &mdash; deliberately built for <strong>predictable latency</strong> and minimal heap allocation instead of convenient standard containers.">Small-Buffer-optimierte Laufzeitwerte, atomare Ringpuffer und ein leichter RW-Lock &mdash; bewusst auf <strong>vorhersagbare Latenz</strong> und minimale Heap-Allokation ausgelegt statt auf bequeme Standard-Container.</p></div><div class="eng-card"><h3><span class="ec-icon">&#x1F9F0;</span> <span class="i18n" data-de="Eigenes Build- & Plugin-Framework" data-en="Custom build & plugin framework">Eigenes Build- & Plugin-Framework</span></h3><p class="i18n" data-de="Ein konventionsbasiertes CMake-Framework generiert Konsumenten-Interfaces automatisch und zieht transitive Abh&auml;ngigkeiten in einer Zeile auf. Bots und KI-Werkzeuge werden als <code>.so</code>-Plugins <strong>zur Laufzeit</strong> geladen." data-en="A convention-based CMake framework generates consumer interfaces automatically and pulls transitive dependencies in a single line. Bots and AI tools are loaded as <code>.so</code> plugins <strong>at runtime</strong>.">Ein konventionsbasiertes CMake-Framework generiert Konsumenten-Interfaces automatisch und zieht transitive Abh&auml;ngigkeiten in einer Zeile auf. Bots und KI-Werkzeuge werden als <code>.so</code>-Plugins <strong>zur Laufzeit</strong> geladen.</p></div><div class="eng-card"><h3><span class="ec-icon">&#x1F333;</span> <span class="i18n" data-de="Abh&auml;ngigkeiten, die sich selbst erkl&auml;ren" data-en="Dependencies that explain themselves">Abh&auml;ngigkeiten, die sich selbst erkl&auml;ren</span></h3><p class="i18n" data-de="Jedes Projekt nennt nur seine n&auml;chsttiefere Schicht &mdash; den Rest kaskadiert das Framework. Daraus entsteht der Abh&auml;ngigkeitsbaum gleich zweimal: <strong>zur Bauzeit</strong> als Datei und <strong>zur Laufzeit</strong> aus einem Register, das meldet, was wirklich geladen ist. Weichen beide voneinander ab, stimmt etwas nicht &mdash; und man sieht sofort, was. Auch die Versionsnummer folgt der Bedeutung: &Auml;nderung hinter der Schnittstelle z&auml;hlt die Build-Nummer, eine Vertrags&auml;nderung die Minor, ein Release die Major." data-en="Every project names only the layer right below it &mdash; the framework cascades the rest. The dependency tree is produced twice: <strong>at build time</strong> as a file and <strong>at runtime</strong> from a registry reporting what is actually loaded. When the two disagree, something is wrong &mdash; and you see what. Version numbers follow meaning too: a change behind the interface bumps the build number, a contract change the minor, a release the major.">Jedes Projekt nennt nur seine n&auml;chsttiefere Schicht &mdash; den Rest kaskadiert das Framework. Daraus entsteht der Abh&auml;ngigkeitsbaum gleich zweimal: <strong>zur Bauzeit</strong> als Datei und <strong>zur Laufzeit</strong> aus einem Register, das meldet, was wirklich geladen ist. Weichen beide voneinander ab, stimmt etwas nicht &mdash; und man sieht sofort, was. Auch die Versionsnummer folgt der Bedeutung: &Auml;nderung hinter der Schnittstelle z&auml;hlt die Build-Nummer, eine Vertrags&auml;nderung die Minor, ein Release die Major.</p></div></div>
 </section>
 
 <div class="divider"></div>
@@ -327,6 +327,7 @@
   <div class="section-label i18n" data-de="Bausteine" data-en="Building blocks">Bausteine</div>
   <h2 class="section-title i18n" data-de="Die Bibliotheken im &Uuml;berblick" data-en="The libraries at a glance">Die Bibliotheken im &Uuml;berblick</h2>
   <p class="section-sub i18n" data-de="Jede Bibliothek ist ein eigenst&auml;ndiges CMake-Projekt und wird als <code>.so</code> ausgeliefert. Klick f&uuml;hrt zur jeweiligen Vorstellung." data-en="Each library is a self-contained CMake project, shipped as a <code>.so</code>. Click through to its introduction.">Jede Bibliothek ist ein eigenst&auml;ndiges CMake-Projekt und wird als <code>.so</code> ausgeliefert. Klick f&uuml;hrt zur jeweiligen Vorstellung.</p>
+  <p style="margin-top:18px"><a href="libs/Schichten.html" class="btn btn-ghost btn-sm i18n" data-de="&#x1F4D0; Schichtendiagramm ansehen" data-en="&#x1F4D0; View the layer diagram">&#x1F4D0; Schichtendiagramm ansehen</a></p>
 </section>
 <div class="divider"></div>
 <section id="cat0" style="padding-top:40px;padding-bottom:40px">
@@ -365,12 +366,12 @@
       <div class="card-chips"><span class="chip i18n" data-de="Threading" data-en="Threading">Threading</span><span class="chip i18n" data-de="PlugInLoader" data-en="PlugInLoader">PlugInLoader</span><span class="chip i18n" data-de=".so" data-en=".so">.so</span></div>
       <span class="card-link"><span class="i18n" data-de="Vorstellung" data-en="Details">Vorstellung</span> <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
     </a>
-    <a href="libs/TwistRingBufferLib.html" class="lib-card green">
-      <div class="card-icon green">&#x1F501;</div>
-      <span class="card-ns i18n" data-de="Ringpuffer" data-en="Ring buffer">Ringpuffer</span>
-      <div class="card-title">TwistRingBufferLib</div>
-      <div class="card-desc i18n" data-de="Ein optimierter Ringpuffer f&uuml;r Datenstr&ouml;me." data-en="An optimized ring buffer for data streams.">Ein optimierter Ringpuffer f&uuml;r Datenstr&ouml;me.</div>
-      <div class="card-chips"><span class="chip i18n" data-de="Ringpuffer" data-en="Ring buffer">Ringpuffer</span><span class="chip i18n" data-de="Streaming" data-en="Streaming">Streaming</span><span class="chip i18n" data-de="Echtzeit" data-en="Real-time">Echtzeit</span></div>
+    <a href="libs/TwistPlugInInterfaceLib.html" class="lib-card teal">
+      <div class="card-icon teal">&#x1F4DC;</div>
+      <span class="card-ns i18n" data-de="namespace TWISTPLUGININTERFACE" data-en="namespace TWISTPLUGININTERFACE">namespace TWISTPLUGININTERFACE</span>
+      <div class="card-title">TwistPlugInInterfaceLib</div>
+      <div class="card-desc i18n" data-de="Die Vertr&auml;ge, die festlegen, was ein PlugIn ist &mdash; bevor eines geladen wird." data-en="The contracts defining what a plugin is &mdash; before any plugin is loaded.">Die Vertr&auml;ge, die festlegen, was ein PlugIn ist &mdash; bevor eines geladen wird.</div>
+      <div class="card-chips"><span class="chip i18n" data-de="PlugIn-Vertr&auml;ge" data-en="Plugin contracts">PlugIn-Vertr&auml;ge</span><span class="chip i18n" data-de="Schicht" data-en="Layer">Schicht</span><span class="chip i18n" data-de="IGraphEngine" data-en="IGraphEngine">IGraphEngine</span></div>
       <span class="card-link"><span class="i18n" data-de="Vorstellung" data-en="Details">Vorstellung</span> <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
     </a>
     <a href="libs/TwistUnitProfilerLib.html" class="lib-card orange">
@@ -427,14 +428,6 @@
       <div class="card-chips"><span class="chip i18n" data-de="DataFrame" data-en="DataFrame">DataFrame</span><span class="chip i18n" data-de="Cursor" data-en="Cursor">Cursor</span><span class="chip i18n" data-de="Ring-Puffer" data-en="Ring buffer">Ring-Puffer</span><span class="chip i18n" data-de="dfId-Register" data-en="dfId registry">dfId-Register</span><span class="chip i18n" data-de="CSV" data-en="CSV">CSV</span><span class="chip i18n" data-de="Go-API" data-en="Go API">Go-API</span></div>
       <span class="card-link"><span class="i18n" data-de="Vorstellung" data-en="Details">Vorstellung</span> <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
     </a>
-    <a href="libs/TwistDataFrameAlgoLib.html" class="lib-card blue">
-      <div class="card-icon blue">&#x2211;</div>
-      <span class="card-ns i18n" data-de="DataFrame-Algorithmen" data-en="DataFrame algorithms">DataFrame-Algorithmen</span>
-      <div class="card-title">TwistDataFrameAlgoLib</div>
-      <div class="card-desc i18n" data-de="Algorithmen und Bedingungen auf DataFrames." data-en="Algorithms and conditions on DataFrames.">Algorithmen und Bedingungen auf DataFrames.</div>
-      <div class="card-chips"><span class="chip i18n" data-de="Algorithmen" data-en="Algorithms">Algorithmen</span><span class="chip i18n" data-de="Filter" data-en="Filter">Filter</span><span class="chip i18n" data-de="Bedingungen" data-en="Conditions">Bedingungen</span></div>
-      <span class="card-link"><span class="i18n" data-de="Vorstellung" data-en="Details">Vorstellung</span> <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
-    </a>
     <a href="libs/TwistArchiveFrameTypes.html" class="lib-card teal">
       <div class="card-icon teal">&#x1F4E6;</div>
       <span class="card-ns i18n" data-de="Frame-Typen" data-en="Frame types">Frame-Typen</span>
@@ -467,6 +460,14 @@
       <div class="card-chips"><span class="chip i18n" data-de="Events" data-en="Events">Events</span><span class="chip i18n" data-de="Trigger" data-en="Triggers">Trigger</span><span class="chip i18n" data-de="reaktiv" data-en="reactive">reaktiv</span></div>
       <span class="card-link"><span class="i18n" data-de="Vorstellung" data-en="Details">Vorstellung</span> <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
     </a>
+    <a href="libs/TwistPriorityFrameLib.html" class="lib-card orange">
+      <div class="card-icon orange">&#x2696;</div>
+      <span class="card-ns i18n" data-de="namespace TWISTPRIORITY" data-en="namespace TWISTPRIORITY">namespace TWISTPRIORITY</span>
+      <div class="card-title">TwistPriorityFrameLib</div>
+      <div class="card-desc i18n" data-de="Ein DataFrame, das sich selbst sortiert &mdash; nach Regeln, die man tauschen kann." data-en="A DataFrame that sorts itself &mdash; by rules you can swap.">Ein DataFrame, das sich selbst sortiert &mdash; nach Regeln, die man tauschen kann.</div>
+      <div class="card-chips"><span class="chip i18n" data-de="Priorit&auml;t" data-en="Priority">Priorit&auml;t</span><span class="chip i18n" data-de="Policies" data-en="Policies">Policies</span><span class="chip i18n" data-de="Aging" data-en="Aging">Aging</span><span class="chip i18n" data-de="Deadline" data-en="Deadline">Deadline</span></div>
+      <span class="card-link"><span class="i18n" data-de="Vorstellung" data-en="Details">Vorstellung</span> <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+    </a>
   </div>
 </section>
 <div class="divider"></div>
@@ -480,14 +481,6 @@
       <div class="card-title">TwistComLib</div>
       <div class="card-desc i18n" data-de="Multi-Protokoll-Kommunikation: MQTT, WebSocket, ZeroMQ." data-en="Multi-protocol communication: MQTT, WebSocket, ZeroMQ.">Multi-Protokoll-Kommunikation: MQTT, WebSocket, ZeroMQ.</div>
       <div class="card-chips"><span class="chip i18n" data-de="MQTT v5" data-en="MQTT v5">MQTT v5</span><span class="chip i18n" data-de="WebSocket" data-en="WebSocket">WebSocket</span><span class="chip i18n" data-de="ZeroMQ" data-en="ZeroMQ">ZeroMQ</span></div>
-      <span class="card-link"><span class="i18n" data-de="Vorstellung" data-en="Details">Vorstellung</span> <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
-    </a>
-    <a href="libs/TwistInfoSystemLib.html" class="lib-card green">
-      <div class="card-icon green">&#x1F4E1;</div>
-      <span class="card-ns i18n" data-de="Pub/Sub" data-en="Pub/Sub">Pub/Sub</span>
-      <div class="card-title">TwistInfoSystemLib</div>
-      <div class="card-desc i18n" data-de="Pub/Sub-Informationsverteilung." data-en="Publish/subscribe information distribution.">Pub/Sub-Informationsverteilung.</div>
-      <div class="card-chips"><span class="chip i18n" data-de="Pub/Sub" data-en="Pub/Sub">Pub/Sub</span><span class="chip i18n" data-de="Verteilung" data-en="Distribution">Verteilung</span><span class="chip i18n" data-de="entkoppelt" data-en="decoupled">entkoppelt</span></div>
       <span class="card-link"><span class="i18n" data-de="Vorstellung" data-en="Details">Vorstellung</span> <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
     </a>
     <a href="libs/TwistAsyncComBridgeLib.html" class="lib-card teal">
@@ -513,22 +506,6 @@
       <div class="card-chips"><span class="chip i18n" data-de="Plugins" data-en="Plugins">Plugins</span><span class="chip i18n" data-de="Bots" data-en="Bots">Bots</span><span class="chip i18n" data-de="Laufzeit" data-en="Runtime">Laufzeit</span></div>
       <span class="card-link"><span class="i18n" data-de="Vorstellung" data-en="Details">Vorstellung</span> <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
     </a>
-    <a href="libs/TwistIndicatorBotLib.html" class="lib-card blue">
-      <div class="card-icon blue">&#x1F4C8;</div>
-      <span class="card-ns i18n" data-de="Indikator-Bots" data-en="Indicator bots">Indikator-Bots</span>
-      <div class="card-title">TwistIndicatorBotLib</div>
-      <div class="card-desc i18n" data-de="Indikator-Bots f&uuml;r technische Analyse." data-en="Indicator bots for technical analysis.">Indikator-Bots f&uuml;r technische Analyse.</div>
-      <div class="card-chips"><span class="chip i18n" data-de="Indikatoren" data-en="Indicators">Indikatoren</span><span class="chip i18n" data-de="Analyse" data-en="Analysis">Analyse</span><span class="chip i18n" data-de="Bots" data-en="Bots">Bots</span></div>
-      <span class="card-link"><span class="i18n" data-de="Vorstellung" data-en="Details">Vorstellung</span> <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
-    </a>
-    <a href="libs/TwistCursorProcessBotContextLib.html" class="lib-card purple">
-      <div class="card-icon purple">&#x1F916;</div>
-      <span class="card-ns i18n" data-de="Bot-Kontext" data-en="Bot context">Bot-Kontext</span>
-      <div class="card-title">TwistCursorProcessBotContextLib</div>
-      <div class="card-desc i18n" data-de="Laufzeit-Kontext f&uuml;r datenverarbeitende Prozess-Bots." data-en="Runtime context for data-processing process bots.">Laufzeit-Kontext f&uuml;r datenverarbeitende Prozess-Bots.</div>
-      <div class="card-chips"><span class="chip i18n" data-de="Bot-Kontext" data-en="Bot context">Bot-Kontext</span><span class="chip i18n" data-de="Process-Bots" data-en="Process bots">Process-Bots</span><span class="chip i18n" data-de="Tasks" data-en="Tasks">Tasks</span></div>
-      <span class="card-link"><span class="i18n" data-de="Vorstellung" data-en="Details">Vorstellung</span> <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
-    </a>
     <a href="libs/TwistMindCommandBotContextLib.html" class="lib-card purple">
       <div class="card-icon purple">&#x1F9E0;</div>
       <span class="card-ns i18n" data-de="KI-Kommando-Kontext" data-en="AI command context">KI-Kommando-Kontext</span>
@@ -543,6 +520,14 @@
       <div class="card-title">TwistLlamaLib</div>
       <div class="card-desc i18n" data-de="Native Anbindung lokaler Sprachmodelle." data-en="Native integration of local language models.">Native Anbindung lokaler Sprachmodelle.</div>
       <div class="card-chips"><span class="chip i18n" data-de="LLM" data-en="LLM">LLM</span><span class="chip i18n" data-de="libllama" data-en="libllama">libllama</span><span class="chip i18n" data-de="lokal" data-en="local">lokal</span></div>
+      <span class="card-link"><span class="i18n" data-de="Vorstellung" data-en="Details">Vorstellung</span> <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+    </a>
+    <a href="libs/TwistQueryGraphLib.html" class="lib-card purple">
+      <div class="card-icon purple">&#x1F517;</div>
+      <span class="card-ns i18n" data-de="namespace TWISTQUERYGRAPH" data-en="namespace TWISTQUERYGRAPH">namespace TWISTQUERYGRAPH</span>
+      <div class="card-title">TwistQueryGraphLib</div>
+      <div class="card-desc i18n" data-de="Der Aufgabengraph: Was voneinander abh&auml;ngt, h&auml;ngt zusammen." data-en="The task graph: what depends on each other belongs together.">Der Aufgabengraph: Was voneinander abh&auml;ngt, h&auml;ngt zusammen.</div>
+      <div class="card-chips"><span class="chip i18n" data-de="Graph" data-en="Graph">Graph</span><span class="chip i18n" data-de="Nebenl&auml;ufigkeit" data-en="Concurrency">Nebenl&auml;ufigkeit</span><span class="chip i18n" data-de="GraphBuilder" data-en="GraphBuilder">GraphBuilder</span></div>
       <span class="card-link"><span class="i18n" data-de="Vorstellung" data-en="Details">Vorstellung</span> <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
     </a>
   </div>

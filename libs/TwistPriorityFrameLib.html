@@ -235,17 +235,18 @@
   
   <div class="topbar-right"><a href="../index.html" class="btn btn-ghost btn-sm i18n" data-de="&larr; Alle Bibliotheken" data-en="&larr; All libraries">&larr; Alle Bibliotheken</a><div class="langtoggle"><button class="lt" data-lang="de">DE</button><button class="lt" data-lang="en">EN</button></div></div>
 </header>
+
 <div class="hero" style="padding:88px 52px 64px">
-  <div class="hero-eyebrow i18n" data-de="Interfaces &middot; Kern &amp; Basis" data-en="Interfaces &middot; Core &amp; Foundation">Interfaces &middot; Kern &amp; Basis</div>
-  <h1 style="font-size:clamp(2.2rem,5vw,3.6rem)"><span class="world">TwistInterfaceLib</span></h1>
-  <p class="hero-sub i18n" data-de="Die abstrakten Vertr&auml;ge, die das &Ouml;kosystem entkoppeln." data-en="The abstract contracts that decouple the ecosystem.">Die abstrakten Vertr&auml;ge, die das &Ouml;kosystem entkoppeln.</p>
-  <div class="hero-tags"><span class="tag i18n" data-de="Interfaces" data-en="Interfaces">Interfaces</span><span class="tag i18n" data-de="Cursor" data-en="Cursor">Cursor</span><span class="tag i18n" data-de="DataFrame" data-en="DataFrame">DataFrame</span><span class="tag i18n" data-de="Entkopplung" data-en="Decoupling">Entkopplung</span></div>
+  <div class="hero-eyebrow i18n" data-de="Priorit&auml;ten &middot; Daten &amp; DataFrames" data-en="Priorities &middot; Data &amp; DataFrames">Priorit&auml;ten &middot; Daten &amp; DataFrames</div>
+  <h1 style="font-size:clamp(2.2rem,5vw,3.6rem)"><span class="world">TwistPriorityFrameLib</span></h1>
+  <p class="hero-sub i18n" data-de="Ein DataFrame, das sich selbst sortiert &mdash; nach Regeln, die man tauschen kann." data-en="A DataFrame that sorts itself &mdash; by rules you can swap.">Ein DataFrame, das sich selbst sortiert &mdash; nach Regeln, die man tauschen kann.</p>
+  <div class="hero-tags"><span class="tag i18n" data-de="Priorit&auml;t" data-en="Priority">Priorit&auml;t</span><span class="tag i18n" data-de="Policies" data-en="Policies">Policies</span><span class="tag i18n" data-de="ScalarVal" data-en="ScalarVal">ScalarVal</span><span class="tag i18n" data-de="Selbst-organisierend" data-en="Self-organising">Selbst-organisierend</span></div>
 </div>
 <div class="divider"></div>
 <section>
   <div class="section-label i18n" data-de="&Uuml;berblick" data-en="Overview">&Uuml;berblick</div>
-  <h2 class="section-title i18n" data-de="Was ist TwistInterfaceLib?" data-en="What is TwistInterfaceLib?">Was ist TwistInterfaceLib?</h2>
-  <p class="section-sub i18n" data-de="Eine reine Schnittstellen-Bibliothek: abstrakte Interfaces f&uuml;r DataFrames, Cursor und weitere Kernkonzepte. Sie ist das <strong>Blatt</strong> des &Ouml;kosystems &mdash; sie h&auml;ngt an keiner anderen TwistLib, nur an fmt, spdlog und Boost. Die PlugIn-Vertr&auml;ge liegen bewusst nicht hier, sondern eine Schicht h&ouml;her in der <a href="TwistPlugInInterfaceLib.html" style="color:var(--accent2)">TwistPlugInInterfaceLib</a>: Deren Fabrikmethoden brauchen einen Konfigurationsbaum und w&uuml;rden die Abh&auml;ngigkeitsfreiheit zerst&ouml;ren." data-en="A pure interface library: abstract interfaces for DataFrames, cursors and other core concepts. It is the <strong>leaf</strong> of the ecosystem &mdash; it depends on no other TwistLib, only on fmt, spdlog and Boost. The plugin contracts deliberately do not live here but one layer up in <a href="TwistPlugInInterfaceLib.html" style="color:var(--accent2)">TwistPlugInInterfaceLib</a>: their factory methods need a configuration tree and would destroy that freedom from dependencies.">Eine reine Schnittstellen-Bibliothek: abstrakte Interfaces f&uuml;r DataFrames, Cursor und weitere Kernkonzepte. Sie ist das <strong>Blatt</strong> des &Ouml;kosystems &mdash; sie h&auml;ngt an keiner anderen TwistLib, nur an fmt, spdlog und Boost. Die PlugIn-Vertr&auml;ge liegen bewusst nicht hier, sondern eine Schicht h&ouml;her in der <a href="TwistPlugInInterfaceLib.html" style="color:var(--accent2)">TwistPlugInInterfaceLib</a>: Deren Fabrikmethoden brauchen einen Konfigurationsbaum und w&uuml;rden die Abh&auml;ngigkeitsfreiheit zerst&ouml;ren.</p>
+  <h2 class="section-title i18n" data-de="Was ist TwistPriorityFrameLib?" data-en="What is TwistPriorityFrameLib?">Was ist TwistPriorityFrameLib?</h2>
+  <p class="section-sub i18n" data-de="Ein selbst-organisierendes Priorit&auml;ten-DataFrame: Eintr&auml;ge tragen eine <code>ScalarVal</code>-Nutzlast, und die Reihenfolge ergibt sich aus einer <em>Policy</em> &mdash; nicht aus festverdrahtetem Code. Wer die Regel &auml;ndert, tauscht die Policy, nicht die Datenstruktur." data-en="A self-organising priority DataFrame: entries carry a <code>ScalarVal</code> payload, and ordering comes from a <em>policy</em> &mdash; not from hard-wired code. Changing the rule means swapping the policy, not the data structure.">Ein selbst-organisierendes Priorit&auml;ten-DataFrame: Eintr&auml;ge tragen eine <code>ScalarVal</code>-Nutzlast, und die Reihenfolge ergibt sich aus einer <em>Policy</em> &mdash; nicht aus festverdrahtetem Code. Wer die Regel &auml;ndert, tauscht die Policy, nicht die Datenstruktur.</p>
 </section>
 <div class="divider"></div>
 <section>
@@ -253,16 +254,16 @@
   <h2 class="section-title i18n" data-de="Was diese Bibliothek leistet" data-en="What this library does">Was diese Bibliothek leistet</h2>
   <div class="eng-grid">
     <div class="eng-card">
-      <h3><span class="ec-icon">&#x1F517;</span> <span class="i18n" data-de="Entkopplung" data-en="Decoupling">Entkopplung</span></h3>
-      <p class="i18n" data-de="Module h&auml;ngen an Interfaces, nicht an Implementierungen." data-en="Modules depend on interfaces, not implementations.">Module h&auml;ngen an Interfaces, nicht an Implementierungen.</p>
+      <h3><span class="ec-icon">&#x2696;</span> <span class="i18n" data-de="Vier Regelwerke" data-en="Four rule sets">Vier Regelwerke</span></h3>
+      <p class="i18n" data-de="<code>AgingPolicy</code> l&auml;sst Wartende steigen, <code>ReinforcementPolicy</code> belohnt Bew&auml;hrtes, <code>DeadlinePolicy</code> rechnet gegen die Uhr, und <code>CompositePolicy</code> kombiniert sie." data-en="<code>AgingPolicy</code> lets waiters rise, <code>ReinforcementPolicy</code> rewards what proved useful, <code>DeadlinePolicy</code> works against the clock, and <code>CompositePolicy</code> combines them."><code>AgingPolicy</code> l&auml;sst Wartende steigen, <code>ReinforcementPolicy</code> belohnt Bew&auml;hrtes, <code>DeadlinePolicy</code> rechnet gegen die Uhr, und <code>CompositePolicy</code> kombiniert sie.</p>
     </div>
     <div class="eng-card">
-      <h3><span class="ec-icon">&#x1F501;</span> <span class="i18n" data-de="Austauschbarkeit" data-en="Interchangeability">Austauschbarkeit</span></h3>
-      <p class="i18n" data-de="Implementierungen lassen sich ersetzen, ohne Konsumenten zu ber&uuml;hren." data-en="Implementations can be swapped without touching consumers.">Implementierungen lassen sich ersetzen, ohne Konsumenten zu ber&uuml;hren.</p>
+      <h3><span class="ec-icon">&#x1F50C;</span> <span class="i18n" data-de="Austauschbar &uuml;ber eine Schnittstelle" data-en="Swappable through one interface">Austauschbar &uuml;ber eine Schnittstelle</span></h3>
+      <p class="i18n" data-de="Alles h&auml;ngt an <code>IPriorityPolicy</code>. Eine eigene Regel ist eine Klasse, kein Eingriff in das Frame." data-en="Everything hangs on <code>IPriorityPolicy</code>. A custom rule is a class, not surgery on the frame.">Alles h&auml;ngt an <code>IPriorityPolicy</code>. Eine eigene Regel ist eine Klasse, kein Eingriff in das Frame.</p>
     </div>
     <div class="eng-card">
-      <h3><span class="ec-icon">&#x1F343;</span> <span class="i18n" data-de="Das Blatt" data-en="The leaf">Das Blatt</span></h3>
-      <p class="i18n" data-de="Ganz unten im Stapel, ohne Abh&auml;ngigkeit zu einer anderen TwistLib &mdash; darum kann jede Schicht dar&uuml;ber sie einbinden." data-en="At the very bottom of the stack, depending on no other TwistLib &mdash; which is why every layer above can include it.">Ganz unten im Stapel, ohne Abh&auml;ngigkeit zu einer anderen TwistLib &mdash; darum kann jede Schicht dar&uuml;ber sie einbinden.</p>
+      <h3><span class="ec-icon">&#x1F9EE;</span> <span class="i18n" data-de="Typsichere Nutzlast" data-en="Type-safe payload">Typsichere Nutzlast</span></h3>
+      <p class="i18n" data-de="Als Nutzlast dient <code>ScalarVal</code> aus TwistTypes &mdash; derselbe typsichere dynamische Wert wie im gesamten &Ouml;kosystem." data-en="The payload is <code>ScalarVal</code> from TwistTypes &mdash; the same type-safe dynamic value used across the ecosystem.">Als Nutzlast dient <code>ScalarVal</code> aus TwistTypes &mdash; derselbe typsichere dynamische Wert wie im gesamten &Ouml;kosystem.</p>
     </div>
   </div>
 </section>
@@ -292,4 +293,5 @@
 })();
 </script>
 </body>
+
 </html>

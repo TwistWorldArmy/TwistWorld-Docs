@@ -235,34 +235,65 @@
   
   <div class="topbar-right"><a href="../index.html" class="btn btn-ghost btn-sm i18n" data-de="&larr; Alle Bibliotheken" data-en="&larr; All libraries">&larr; Alle Bibliotheken</a><div class="langtoggle"><button class="lt" data-lang="de">DE</button><button class="lt" data-lang="en">EN</button></div></div>
 </header>
+
 <div class="hero" style="padding:88px 52px 64px">
-  <div class="hero-eyebrow i18n" data-de="Interfaces &middot; Kern &amp; Basis" data-en="Interfaces &middot; Core &amp; Foundation">Interfaces &middot; Kern &amp; Basis</div>
-  <h1 style="font-size:clamp(2.2rem,5vw,3.6rem)"><span class="world">TwistInterfaceLib</span></h1>
-  <p class="hero-sub i18n" data-de="Die abstrakten Vertr&auml;ge, die das &Ouml;kosystem entkoppeln." data-en="The abstract contracts that decouple the ecosystem.">Die abstrakten Vertr&auml;ge, die das &Ouml;kosystem entkoppeln.</p>
-  <div class="hero-tags"><span class="tag i18n" data-de="Interfaces" data-en="Interfaces">Interfaces</span><span class="tag i18n" data-de="Cursor" data-en="Cursor">Cursor</span><span class="tag i18n" data-de="DataFrame" data-en="DataFrame">DataFrame</span><span class="tag i18n" data-de="Entkopplung" data-en="Decoupling">Entkopplung</span></div>
+  <div class="hero-eyebrow i18n" data-de="Architektur" data-en="Architecture">Architektur</div>
+  <h1 style="font-size:clamp(2.2rem,5vw,3.6rem)"><span class="world">Schichten</span></h1>
+  <p class="hero-sub i18n" data-de="Wer braucht wen &mdash; und warum jede Bibliothek nur ihre n&auml;chsttiefere nennt." data-en="Who needs whom &mdash; and why every library names only the layer right below it.">Wer braucht wen &mdash; und warum jede Bibliothek nur ihre n&auml;chsttiefere nennt.</p>
+  <div class="hero-tags"><span class="tag i18n" data-de="Kaskadierung" data-en="Cascading">Kaskadierung</span><span class="tag i18n" data-de="CMake" data-en="CMake">CMake</span><span class="tag i18n" data-de="Schichten" data-en="Layers">Schichten</span><span class="tag i18n" data-de="Diagramme" data-en="Diagrams">Diagramme</span></div>
 </div>
 <div class="divider"></div>
 <section>
-  <div class="section-label i18n" data-de="&Uuml;berblick" data-en="Overview">&Uuml;berblick</div>
-  <h2 class="section-title i18n" data-de="Was ist TwistInterfaceLib?" data-en="What is TwistInterfaceLib?">Was ist TwistInterfaceLib?</h2>
-  <p class="section-sub i18n" data-de="Eine reine Schnittstellen-Bibliothek: abstrakte Interfaces f&uuml;r DataFrames, Cursor und weitere Kernkonzepte. Sie ist das <strong>Blatt</strong> des &Ouml;kosystems &mdash; sie h&auml;ngt an keiner anderen TwistLib, nur an fmt, spdlog und Boost. Die PlugIn-Vertr&auml;ge liegen bewusst nicht hier, sondern eine Schicht h&ouml;her in der <a href="TwistPlugInInterfaceLib.html" style="color:var(--accent2)">TwistPlugInInterfaceLib</a>: Deren Fabrikmethoden brauchen einen Konfigurationsbaum und w&uuml;rden die Abh&auml;ngigkeitsfreiheit zerst&ouml;ren." data-en="A pure interface library: abstract interfaces for DataFrames, cursors and other core concepts. It is the <strong>leaf</strong> of the ecosystem &mdash; it depends on no other TwistLib, only on fmt, spdlog and Boost. The plugin contracts deliberately do not live here but one layer up in <a href="TwistPlugInInterfaceLib.html" style="color:var(--accent2)">TwistPlugInInterfaceLib</a>: their factory methods need a configuration tree and would destroy that freedom from dependencies.">Eine reine Schnittstellen-Bibliothek: abstrakte Interfaces f&uuml;r DataFrames, Cursor und weitere Kernkonzepte. Sie ist das <strong>Blatt</strong> des &Ouml;kosystems &mdash; sie h&auml;ngt an keiner anderen TwistLib, nur an fmt, spdlog und Boost. Die PlugIn-Vertr&auml;ge liegen bewusst nicht hier, sondern eine Schicht h&ouml;her in der <a href="TwistPlugInInterfaceLib.html" style="color:var(--accent2)">TwistPlugInInterfaceLib</a>: Deren Fabrikmethoden brauchen einen Konfigurationsbaum und w&uuml;rden die Abh&auml;ngigkeitsfreiheit zerst&ouml;ren.</p>
+  <div class="section-label i18n" data-de="Prinzip" data-en="Principle">Prinzip</div>
+  <h2 class="section-title i18n" data-de="Jede Bibliothek nennt nur ihre n&auml;chsttiefere" data-en="Every library names only the one below it">Jede Bibliothek nennt nur ihre n&auml;chsttiefere</h2>
+  <p class="section-sub i18n" data-de="Ein Programm bindet nur die obersten Bibliotheken ein; jede Bibliothek nennt nur ihre direkten Nachbarn. Alles Weitere kaskadiert das CMake-Framework automatisch &mdash; <code>TwistMindService2</code> deklariert eine einzige Abh&auml;ngigkeit und erreicht damit acht. Das ist nicht nur bequem: Eine neue Schicht l&auml;sst sich zwischen zwei bestehende einziehen, ohne die Konsumenten anzufassen." data-en="A program includes only the topmost libraries; each library names only its direct neighbours. Everything else cascades automatically through the CMake framework &mdash; <code>TwistMindService2</code> declares a single dependency and reaches eight. That is more than convenience: a new layer can be inserted between two existing ones without touching consumers.">Ein Programm bindet nur die obersten Bibliotheken ein; jede Bibliothek nennt nur ihre direkten Nachbarn. Alles Weitere kaskadiert das CMake-Framework automatisch &mdash; <code>TwistMindService2</code> deklariert eine einzige Abh&auml;ngigkeit und erreicht damit acht. Das ist nicht nur bequem: Eine neue Schicht l&auml;sst sich zwischen zwei bestehende einziehen, ohne die Konsumenten anzufassen.</p>
 </section>
 <div class="divider"></div>
 <section>
-  <div class="section-label i18n" data-de="F&auml;higkeiten" data-en="Capabilities">F&auml;higkeiten</div>
-  <h2 class="section-title i18n" data-de="Was diese Bibliothek leistet" data-en="What this library does">Was diese Bibliothek leistet</h2>
+  <div class="section-label i18n" data-de="Ein Strang" data-en="A single strand">Ein Strang</div>
+  <h2 class="section-title i18n" data-de="TwistMindService2 &mdash; eine Deklaration, acht Bibliotheken" data-en="TwistMindService2 &mdash; one declaration, eight libraries">TwistMindService2 &mdash; eine Deklaration, acht Bibliotheken</h2>
+  <p class="section-sub i18n" data-de="Der Dienst nennt in seiner <code>CMakeLists</code> nur <code>TwistUtils</code>. Gestrichelte Kanten f&uuml;hren zu Fremdbibliotheken." data-en="In its <code>CMakeLists</code> the service names only <code>TwistUtils</code>. Dashed edges lead to third-party libraries.">Der Dienst nennt in seiner <code>CMakeLists</code> nur <code>TwistUtils</code>. Gestrichelte Kanten f&uuml;hren zu Fremdbibliotheken.</p>
+  <figure style="margin:28px 0;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:22px;overflow:auto">
+    <img src="../img/TwistMindService2-Layers_Diagramm_deklariert.svg" alt="" style="width:100%;height:auto;display:block"/>
+    <figcaption class="i18n" style="margin-top:14px;color:var(--text-dim);font-size:0.92rem" data-de="Deklarierte Abh&auml;ngigkeiten von TwistMindService2. Erzeugt aus den CMakeLists &mdash; nicht von Hand gepflegt." data-en="Declared dependencies of TwistMindService2. Generated from the CMakeLists &mdash; not maintained by hand.">Deklarierte Abh&auml;ngigkeiten von TwistMindService2. Erzeugt aus den CMakeLists &mdash; nicht von Hand gepflegt.</figcaption>
+  </figure>
+</section>
+<div class="divider"></div>
+<section>
+  <div class="section-label i18n" data-de="Der Unterbau" data-en="The foundation">Der Unterbau</div>
+  <h2 class="section-title i18n" data-de="Die Bibliotheken untereinander" data-en="The libraries among themselves">Die Bibliotheken untereinander</h2>
+  <p class="section-sub i18n" data-de="Unten das abh&auml;ngigkeitsfreie Blatt <code>TwistInterfaceLib</code>, darauf <code>TwistSystemUtils</code> und <code>TwistTypes</code>. Je h&ouml;her eine Schicht liegt, desto spezieller ist ihre Aufgabe." data-en="At the bottom the dependency-free leaf <code>TwistInterfaceLib</code>, above it <code>TwistSystemUtils</code> and <code>TwistTypes</code>. The higher a layer sits, the more specialised its job.">Unten das abh&auml;ngigkeitsfreie Blatt <code>TwistInterfaceLib</code>, darauf <code>TwistSystemUtils</code> und <code>TwistTypes</code>. Je h&ouml;her eine Schicht liegt, desto spezieller ist ihre Aufgabe.</p>
+  <figure style="margin:28px 0;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:22px;overflow:auto">
+    <img src="../img/TwistLibs-Layers_Diagramm_deklariert.svg" alt="" style="width:100%;height:auto;display:block"/>
+    <figcaption class="i18n" style="margin-top:14px;color:var(--text-dim);font-size:0.92rem" data-de="Alle TwistLibs und ihre deklarierten Abh&auml;ngigkeiten." data-en="All TwistLibs and their declared dependencies.">Alle TwistLibs und ihre deklarierten Abh&auml;ngigkeiten.</figcaption>
+  </figure>
+</section>
+<div class="divider"></div>
+<section>
+  <div class="section-label i18n" data-de="Das Ganze" data-en="The whole thing">Das Ganze</div>
+  <h2 class="section-title i18n" data-de="Alle Projekte auf einen Blick" data-en="Every project at a glance">Alle Projekte auf einen Blick</h2>
+  <p class="section-sub i18n" data-de="Bibliotheken, PlugIns und Anwendungen zusammen. Dieses Bild ist bewusst gro&szlig; &mdash; es zeigt, wie flach der Stapel trotz der Zahl der Projekte bleibt." data-en="Libraries, plugins and applications together. This picture is deliberately large &mdash; it shows how flat the stack stays despite the number of projects.">Bibliotheken, PlugIns und Anwendungen zusammen. Dieses Bild ist bewusst gro&szlig; &mdash; es zeigt, wie flach der Stapel trotz der Zahl der Projekte bleibt.</p>
+  <figure style="margin:28px 0;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:22px;overflow:auto">
+    <img src="../img/TwistWorld-Layers_Diagramm_deklariert.svg" alt="" style="width:100%;height:auto;display:block;min-width:720px"/>
+    <figcaption class="i18n" style="margin-top:14px;color:var(--text-dim);font-size:0.92rem" data-de="Deklarierte Abh&auml;ngigkeiten aller Projekte in TwistWorld." data-en="Declared dependencies of every project in TwistWorld.">Deklarierte Abh&auml;ngigkeiten aller Projekte in TwistWorld.</figcaption>
+  </figure>
+</section>
+<div class="divider"></div>
+<section>
+  <div class="section-label i18n" data-de="Zwei Sichten" data-en="Two views">Zwei Sichten</div>
+  <h2 class="section-title i18n" data-de="Deklariert und tats&auml;chlich geladen" data-en="Declared and actually loaded">Deklariert und tats&auml;chlich geladen</h2>
   <div class="eng-grid">
     <div class="eng-card">
-      <h3><span class="ec-icon">&#x1F517;</span> <span class="i18n" data-de="Entkopplung" data-en="Decoupling">Entkopplung</span></h3>
-      <p class="i18n" data-de="Module h&auml;ngen an Interfaces, nicht an Implementierungen." data-en="Modules depend on interfaces, not implementations.">Module h&auml;ngen an Interfaces, nicht an Implementierungen.</p>
+      <h3><span class="ec-icon">&#x1F4D0;</span> <span class="i18n" data-de="Zur Bauzeit" data-en="At build time">Zur Bauzeit</span></h3>
+      <p class="i18n" data-de="Aus den <code>CMakeLists</code> entsteht beim Konfigurieren eine Datei <code>&lt;Projekt&gt;_Lib_dependency.txt</code> &mdash; mit Versionen und Fremdbibliotheken, ohne dass etwas ausgef&uuml;hrt wird." data-en="Configuring writes a <code>&lt;Project&gt;_Lib_dependency.txt</code> from the <code>CMakeLists</code> &mdash; with versions and third-party libraries, without running anything.">Aus den <code>CMakeLists</code> entsteht beim Konfigurieren eine Datei <code>&lt;Projekt&gt;_Lib_dependency.txt</code> &mdash; mit Versionen und Fremdbibliotheken, ohne dass etwas ausgef&uuml;hrt wird.</p>
     </div>
     <div class="eng-card">
-      <h3><span class="ec-icon">&#x1F501;</span> <span class="i18n" data-de="Austauschbarkeit" data-en="Interchangeability">Austauschbarkeit</span></h3>
-      <p class="i18n" data-de="Implementierungen lassen sich ersetzen, ohne Konsumenten zu ber&uuml;hren." data-en="Implementations can be swapped without touching consumers.">Implementierungen lassen sich ersetzen, ohne Konsumenten zu ber&uuml;hren.</p>
+      <h3><span class="ec-icon">&#x1F501;</span> <span class="i18n" data-de="Zur Laufzeit" data-en="At runtime">Zur Laufzeit</span></h3>
+      <p class="i18n" data-de="Jede Bibliothek meldet sich beim Start in einem Register an. Das Programm druckt daraus den Baum dessen, was <em>wirklich</em> geladen ist &mdash; samt Build-Typ und Version je Knoten." data-en="Every library registers itself at startup. From that the program prints the tree of what is <em>actually</em> loaded &mdash; including build type and version per node.">Jede Bibliothek meldet sich beim Start in einem Register an. Das Programm druckt daraus den Baum dessen, was <em>wirklich</em> geladen ist &mdash; samt Build-Typ und Version je Knoten.</p>
     </div>
     <div class="eng-card">
-      <h3><span class="ec-icon">&#x1F343;</span> <span class="i18n" data-de="Das Blatt" data-en="The leaf">Das Blatt</span></h3>
-      <p class="i18n" data-de="Ganz unten im Stapel, ohne Abh&auml;ngigkeit zu einer anderen TwistLib &mdash; darum kann jede Schicht dar&uuml;ber sie einbinden." data-en="At the very bottom of the stack, depending on no other TwistLib &mdash; which is why every layer above can include it.">Ganz unten im Stapel, ohne Abh&auml;ngigkeit zu einer anderen TwistLib &mdash; darum kann jede Schicht dar&uuml;ber sie einbinden.</p>
+      <h3><span class="ec-icon">&#x1F50E;</span> <span class="i18n" data-de="Warum beide" data-en="Why both">Warum beide</span></h3>
+      <p class="i18n" data-de="Weichen sie voneinander ab, stimmt etwas nicht: eine gemischte Debug-/Release-Aufl&ouml;sung etwa, oder eine Schicht, die der Linker weggeworfen hat. Genau so wurden beide F&auml;lle gefunden." data-en="When they disagree, something is wrong: a mixed debug/release resolution, say, or a layer the linker discarded. That is exactly how both cases were found.">Weichen sie voneinander ab, stimmt etwas nicht: eine gemischte Debug-/Release-Aufl&ouml;sung etwa, oder eine Schicht, die der Linker weggeworfen hat. Genau so wurden beide F&auml;lle gefunden.</p>
     </div>
   </div>
 </section>

@@ -235,17 +235,18 @@
   
   <div class="topbar-right"><a href="../index.html" class="btn btn-ghost btn-sm i18n" data-de="&larr; Alle Bibliotheken" data-en="&larr; All libraries">&larr; Alle Bibliotheken</a><div class="langtoggle"><button class="lt" data-lang="de">DE</button><button class="lt" data-lang="en">EN</button></div></div>
 </header>
+
 <div class="hero" style="padding:88px 52px 64px">
-  <div class="hero-eyebrow i18n" data-de="Interfaces &middot; Kern &amp; Basis" data-en="Interfaces &middot; Core &amp; Foundation">Interfaces &middot; Kern &amp; Basis</div>
-  <h1 style="font-size:clamp(2.2rem,5vw,3.6rem)"><span class="world">TwistInterfaceLib</span></h1>
-  <p class="hero-sub i18n" data-de="Die abstrakten Vertr&auml;ge, die das &Ouml;kosystem entkoppeln." data-en="The abstract contracts that decouple the ecosystem.">Die abstrakten Vertr&auml;ge, die das &Ouml;kosystem entkoppeln.</p>
-  <div class="hero-tags"><span class="tag i18n" data-de="Interfaces" data-en="Interfaces">Interfaces</span><span class="tag i18n" data-de="Cursor" data-en="Cursor">Cursor</span><span class="tag i18n" data-de="DataFrame" data-en="DataFrame">DataFrame</span><span class="tag i18n" data-de="Entkopplung" data-en="Decoupling">Entkopplung</span></div>
+  <div class="hero-eyebrow i18n" data-de="Aufgabengraph &middot; Bots, Plugins &amp; KI" data-en="Task graph &middot; Bots, plugins &amp; AI">Aufgabengraph &middot; Bots, Plugins &amp; KI</div>
+  <h1 style="font-size:clamp(2.2rem,5vw,3.6rem)"><span class="world">TwistQueryGraphLib</span></h1>
+  <p class="hero-sub i18n" data-de="Ein Modell zerlegt eine Aufgabe nicht in einen Baum, sondern in einen Graphen." data-en="A model does not break a task into a tree, but into a graph.">Ein Modell zerlegt eine Aufgabe nicht in einen Baum, sondern in einen Graphen.</p>
+  <div class="hero-tags"><span class="tag i18n" data-de="Graph" data-en="Graph">Graph</span><span class="tag i18n" data-de="Abh&auml;ngigkeiten" data-en="Dependencies">Abh&auml;ngigkeiten</span><span class="tag i18n" data-de="Nebenl&auml;ufigkeit" data-en="Concurrency">Nebenl&auml;ufigkeit</span><span class="tag i18n" data-de="GraphBuilder" data-en="GraphBuilder">GraphBuilder</span></div>
 </div>
 <div class="divider"></div>
 <section>
   <div class="section-label i18n" data-de="&Uuml;berblick" data-en="Overview">&Uuml;berblick</div>
-  <h2 class="section-title i18n" data-de="Was ist TwistInterfaceLib?" data-en="What is TwistInterfaceLib?">Was ist TwistInterfaceLib?</h2>
-  <p class="section-sub i18n" data-de="Eine reine Schnittstellen-Bibliothek: abstrakte Interfaces f&uuml;r DataFrames, Cursor und weitere Kernkonzepte. Sie ist das <strong>Blatt</strong> des &Ouml;kosystems &mdash; sie h&auml;ngt an keiner anderen TwistLib, nur an fmt, spdlog und Boost. Die PlugIn-Vertr&auml;ge liegen bewusst nicht hier, sondern eine Schicht h&ouml;her in der <a href="TwistPlugInInterfaceLib.html" style="color:var(--accent2)">TwistPlugInInterfaceLib</a>: Deren Fabrikmethoden brauchen einen Konfigurationsbaum und w&uuml;rden die Abh&auml;ngigkeitsfreiheit zerst&ouml;ren." data-en="A pure interface library: abstract interfaces for DataFrames, cursors and other core concepts. It is the <strong>leaf</strong> of the ecosystem &mdash; it depends on no other TwistLib, only on fmt, spdlog and Boost. The plugin contracts deliberately do not live here but one layer up in <a href="TwistPlugInInterfaceLib.html" style="color:var(--accent2)">TwistPlugInInterfaceLib</a>: their factory methods need a configuration tree and would destroy that freedom from dependencies.">Eine reine Schnittstellen-Bibliothek: abstrakte Interfaces f&uuml;r DataFrames, Cursor und weitere Kernkonzepte. Sie ist das <strong>Blatt</strong> des &Ouml;kosystems &mdash; sie h&auml;ngt an keiner anderen TwistLib, nur an fmt, spdlog und Boost. Die PlugIn-Vertr&auml;ge liegen bewusst nicht hier, sondern eine Schicht h&ouml;her in der <a href="TwistPlugInInterfaceLib.html" style="color:var(--accent2)">TwistPlugInInterfaceLib</a>: Deren Fabrikmethoden brauchen einen Konfigurationsbaum und w&uuml;rden die Abh&auml;ngigkeitsfreiheit zerst&ouml;ren.</p>
+  <h2 class="section-title i18n" data-de="Was ist TwistQueryGraphLib?" data-en="What is TwistQueryGraphLib?">Was ist TwistQueryGraphLib?</h2>
+  <p class="section-sub i18n" data-de="Was voneinander abh&auml;ngt, h&auml;ngt zusammen; was nebeneinander steht, kann gleichzeitig laufen. Ein Schritt, der die Ergebnisse zweier unabh&auml;ngiger Str&auml;nge braucht, hat zwei Vorg&auml;nger &mdash; und genau das kann ein Baum nicht. Der Graph kennt die <strong>Kanten</strong> und sagt, was bereit ist; die Knoten geh&ouml;ren dem GraphManager und werden &uuml;ber <code>IEntityRegistry</code> erreicht. Mehrere Graphen arbeiten nebeneinander auf denselben Knoten, jeder mit eigenen Kanten." data-en="What depends on each other belongs together; what sits side by side can run at the same time. A step needing the results of two independent strands has two predecessors &mdash; exactly what a tree cannot express. The graph owns the <strong>edges</strong> and says what is ready; the nodes belong to the GraphManager and are reached through <code>IEntityRegistry</code>. Several graphs work side by side on the same nodes, each with its own edges.">Was voneinander abh&auml;ngt, h&auml;ngt zusammen; was nebeneinander steht, kann gleichzeitig laufen. Ein Schritt, der die Ergebnisse zweier unabh&auml;ngiger Str&auml;nge braucht, hat zwei Vorg&auml;nger &mdash; und genau das kann ein Baum nicht. Der Graph kennt die <strong>Kanten</strong> und sagt, was bereit ist; die Knoten geh&ouml;ren dem GraphManager und werden &uuml;ber <code>IEntityRegistry</code> erreicht. Mehrere Graphen arbeiten nebeneinander auf denselben Knoten, jeder mit eigenen Kanten.</p>
 </section>
 <div class="divider"></div>
 <section>
@@ -253,16 +254,16 @@
   <h2 class="section-title i18n" data-de="Was diese Bibliothek leistet" data-en="What this library does">Was diese Bibliothek leistet</h2>
   <div class="eng-grid">
     <div class="eng-card">
-      <h3><span class="ec-icon">&#x1F517;</span> <span class="i18n" data-de="Entkopplung" data-en="Decoupling">Entkopplung</span></h3>
-      <p class="i18n" data-de="Module h&auml;ngen an Interfaces, nicht an Implementierungen." data-en="Modules depend on interfaces, not implementations.">Module h&auml;ngen an Interfaces, nicht an Implementierungen.</p>
+      <h3><span class="ec-icon">&#x1F517;</span> <span class="i18n" data-de="Kanten statt &Auml;ste" data-en="Edges instead of branches">Kanten statt &Auml;ste</span></h3>
+      <p class="i18n" data-de="Ein Knoten darf mehrere Vorg&auml;nger haben. Zusammenf&uuml;hrende Str&auml;nge sind damit ausdr&uuml;ckbar, ohne sie k&uuml;nstlich zu serialisieren." data-en="A node may have several predecessors. Converging strands become expressible without artificially serialising them.">Ein Knoten darf mehrere Vorg&auml;nger haben. Zusammenf&uuml;hrende Str&auml;nge sind damit ausdr&uuml;ckbar, ohne sie k&uuml;nstlich zu serialisieren.</p>
     </div>
     <div class="eng-card">
-      <h3><span class="ec-icon">&#x1F501;</span> <span class="i18n" data-de="Austauschbarkeit" data-en="Interchangeability">Austauschbarkeit</span></h3>
-      <p class="i18n" data-de="Implementierungen lassen sich ersetzen, ohne Konsumenten zu ber&uuml;hren." data-en="Implementations can be swapped without touching consumers.">Implementierungen lassen sich ersetzen, ohne Konsumenten zu ber&uuml;hren.</p>
+      <h3><span class="ec-icon">&#x1F3AF;</span> <span class="i18n" data-de="Trennung von Wissen und Tun" data-en="Knowing apart from doing">Trennung von Wissen und Tun</span></h3>
+      <p class="i18n" data-de="Der Graph selbst spricht mit keinem Modell und h&auml;lt keine Ergebnisse &mdash; er nennt die bereiten Knoten. Das Ausf&uuml;hren, Warten und Begrenzen der Parallelit&auml;t liegt im <code>QueryGraphModule</code>." data-en="The graph itself talks to no model and holds no results &mdash; it names the ready nodes. Executing, waiting and capping concurrency live in <code>QueryGraphModule</code>.">Der Graph selbst spricht mit keinem Modell und h&auml;lt keine Ergebnisse &mdash; er nennt die bereiten Knoten. Das Ausf&uuml;hren, Warten und Begrenzen der Parallelit&auml;t liegt im <code>QueryGraphModule</code>.</p>
     </div>
     <div class="eng-card">
-      <h3><span class="ec-icon">&#x1F343;</span> <span class="i18n" data-de="Das Blatt" data-en="The leaf">Das Blatt</span></h3>
-      <p class="i18n" data-de="Ganz unten im Stapel, ohne Abh&auml;ngigkeit zu einer anderen TwistLib &mdash; darum kann jede Schicht dar&uuml;ber sie einbinden." data-en="At the very bottom of the stack, depending on no other TwistLib &mdash; which is why every layer above can include it.">Ganz unten im Stapel, ohne Abh&auml;ngigkeit zu einer anderen TwistLib &mdash; darum kann jede Schicht dar&uuml;ber sie einbinden.</p>
+      <h3><span class="ec-icon">&#x1F3D7;</span> <span class="i18n" data-de="Aus Antwort wird Graph" data-en="From answer to graph">Aus Antwort wird Graph</span></h3>
+      <p class="i18n" data-de="Der <code>GraphBuilder</code> macht aus einer Modellantwort Knoten und Kanten &mdash; oder nennt den Grund, warum es nicht ging." data-en="The <code>GraphBuilder</code> turns a model answer into nodes and edges &mdash; or states the reason why it could not.">Der <code>GraphBuilder</code> macht aus einer Modellantwort Knoten und Kanten &mdash; oder nennt den Grund, warum es nicht ging.</p>
     </div>
   </div>
 </section>
@@ -292,4 +293,5 @@
 })();
 </script>
 </body>
+
 </html>
